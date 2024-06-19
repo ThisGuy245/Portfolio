@@ -1,6 +1,16 @@
 ---
+// src/pages/[...lang]/index.astro
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/Card.astro';
+import LanguagePicker from '../../components/LanguagePicker.astro';
+import { supportedLanguages } from '../../../i18n';
+
+export function getStaticPaths() {
+	const paths = supportedLanguages.map(lang => ({
+		params: { lang },
+	}));
+	return paths; // Ensure this returns an array directly
+}
 ---
 
 <Layout title="Website Yippee!">
@@ -33,6 +43,9 @@ import Card from '../../components/Card.astro';
 				</linearGradient>
 			</defs>
 		</svg>
+
+		<LanguagePicker />
+
 		<h1>Website <span class="text-gradient">in Astro!</span></h1>
 		<p class="instructions">
 			To get started, open the directory <code>src/pages</code> in your project.<br />
