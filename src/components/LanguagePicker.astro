@@ -1,35 +1,96 @@
 ---
-import {Image} from 'astro:assets';
-import {languages} from '../i18n/ui';
-import {getLangFromUrl} from '../i18n/utils';
+import { Image } from 'astro:assets';
+import { languages } from '../i18n/ui';
+import { getLangFromUrl } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 ---
 
-<div class="my-auto flex flex-col">
-	<button onclick="showLangs();">
-		<Image loading="eager" width="40" height="40" class="size-10 rounded-full transition-transform ease-in-out duration-300 hover:scale-105" src=`/languageFlags/${lang}.svg` alt=`${lang} flag` />
+<div class="language-picker">
+	<button class="language-toggle" onclick="toggleLangs()">
+		<Image loading="eager" width="40" height="40" class="language-icon rounded-full" src={`/languageFlags/${lang}.svg`} alt={`${lang} flag`} />
 	</button>
-	<div id="langOptions" class="absolute -ml-4 -mt-4 hidden flex-col gap-4 rounded-2xl bg-neutral-950/30 p-4 shadow-2xl backdrop-blur-md">
-		<button onclick="closeLangs();">
-			<Image width="40" height="40" class="size-10 rounded-full transition-transform ease-in-out duration-300 hover:scale-105" src=`/languageFlags/${lang}.svg` alt={lang} />
+	<div id="langOptions" class="language-options hidden">
+		<button class="language-close" onclick="toggleLangs()">
+			<Image width="40" height="40" class="language-icon rounded-full" src={`/languageFlags/${lang}.svg`} alt={lang} />
 		</button>
-		{languages.map(l => l.key != lang &&
-			<button data-lang={l.key} onclick="changeLang(this.dataset.lang);">
-				<Image width="40" height="40" class="size-10 rounded-full transition-transform ease-in-out duration-300 hover:scale-105" src=`/languageFlags/${l.key}.svg` alt={l.name} />
+		{languages.map(l => l.key !== lang && (
+			<button data-lang={l.key} onclick="changeLang(this.dataset.lang)" class="language-option">
+				<Image width="40" height="40" class="language-icon rounded-full" src={`/languageFlags/${l.key}.svg`} alt={l.name} />
 			</button>
-		)}
+		))}
 	</div>
 </div>
 
 <script is:inline>
-	const select = document.getElementById('langOptions');
-	const showLangs = () => select.classList.replace('hidden', 'flex');
-	const closeLangs = () => select.classList.replace('flex', 'hidden');
+	const langOptions = document.getElementById('langOptions');
+
+	const toggleLangs = () => {
+		langOptions.classList.toggle('hidden');
+	};
 
 	const changeLang = (lang) => {
-		closeLangs();
 		const newPath = window.location.href.replace(/\/[a-z]{2}-[A-Z]{2}\//, `/${lang}/`);
 		window.location.replace(newPath);
 	};
 </script>
+
+<style>
+	.language-picker {
+		position: relative;
+		z-index: 10; /* Ensure it's above other content */
+	}
+
+	.language-toggle {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+		margin: 0;
+		display: block;
+	}
+
+	.language-options {
+		position: absolute;
+		top: 50px; /* Adjust based on your layout */
+		right: 0;
+		background-color: rgba(0, 0, 0, 0.8); /* Adjust transparency as needed */
+		border-radius: 10px;
+		padding: 10px;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		z-index: 5; /* Lower than the main content, but above the background */
+	}
+
+	.language-options.hidden {
+		display: none;
+	}
+
+	.language-option {
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.language-icon {
+		width: 40px;
+		height: 40px;
+		border-radius: 50%;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.language-option:hover .language-icon {
+		transform: scale(1.05);
+	}
+
+	.language-close {
+		align-self: flex-end;
+	}
+</style>

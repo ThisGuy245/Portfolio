@@ -1,16 +1,18 @@
 ---
-// src/pages/[...lang]/index.astro
+import { languages } from '../../i18n/ui';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/Card.astro';
 import LanguagePicker from '../../components/LanguagePicker.astro';
-import { supportedLanguages } from '../../../i18n';
+import Card from '../../components/Card.astro';
 
-export function getStaticPaths() {
-	const paths = supportedLanguages.map(lang => ({
-		params: { lang },
-	}));
-	return paths; // Ensure this returns an array directly
+// Ensure getStaticPaths returns an array of paths
+export async function getStaticPaths() {
+	return languages.map(lang => ({ params: { lang: lang.key } }));
 }
+
+// Get the language from the URL
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Layout title="Website Yippee!">
@@ -43,7 +45,6 @@ export function getStaticPaths() {
 				</linearGradient>
 			</defs>
 		</svg>
-
 		<LanguagePicker />
 
 		<h1>Website <span class="text-gradient">in Astro!</span></h1>
