@@ -1,0 +1,22 @@
+---
+
+import {getLangFromUrl, useTranslations} from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const notFound = `404: ${t('Not found')}`;
+---
+
+<html lang={lang}>
+<head>
+    <meta charset="utf-8" />
+    <title>{notFound}</title>
+</head>
+<body class="bg-neutral-800">
+<div class="flex gap-2 h-screen w-screen flex-col items-center justify-center text-neutral-200">
+    <h1 class="text-4xl font-bold text-primary-500">{notFound}</h1>
+    <pre id="route" class="text-xl">{t('Path')}: {Astro.url.pathname}</pre>
+</div>
+</body>
+</html>
+
