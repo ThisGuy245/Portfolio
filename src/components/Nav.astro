@@ -1,59 +1,116 @@
 ---
-import {getLangFromUrl, translate, useTranslations} from '../i18n/utils';
+import type { Route } from '../util/types';
+import { getLangFromUrl, useTranslations } from '../i18n/utils';
+import LanguagePicker from './LanguagePicker.astro';
 
-const { lang } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const currentPage = Astro.url.pathname.replace(/\/$/, '');
+const routes: Route[] = [
+    { title: t('Home'), path: `/${lang}` },
+    { title: t('Projects'), path: `/${lang}/projects` },
+    { title: t('About'), path: `/${lang}/about` },
+    { title: t('Resume'), path: `/${lang}/resume.pdf` }
+];
 ---
 
 <nav class="navbar">
-    <ul>
-        <li><a href="#projects">{t('Projects')}</a></li>
-        <li><a href="#about">{t('About')}</a></li>
-        <li><a href="/resume.pdf" target="_blank" class="resume-btn">{t('Resume')}</a></li>
+    <div class="navbar-brand">
+        <span>Thomas Isherwood</span>
+    </div>
+    <ul class="navbar-menu">
+        <li class={`nav-item ${currentPage === `/${lang}` ? 'active' : ''}`}>
+            <a href={`/${lang}`}>Home{t('Home')}</a>
+        </li>
+        <li class={`nav-item ${currentPage === `/${lang}/projects` ? 'active' : ''}`}>
+            <a href={`/${lang}/projects`}>Projects{t('Projects')}</a>
+        </li>
+        <li class={`nav-item ${currentPage === `/${lang}/about` ? 'active' : ''}`}>
+            <a href={`/${lang}/about`}>About{t('About')}</a>
+        </li>
+        <li class="nav-item">
+            <a href={`/${lang}/resume.pdf`} target="_blank" class="resume-btn">Resume{t('Resume')}</a>
+        </li>
     </ul>
 </nav>
 
+<script is:inline>
+    const nav = document.querySelector('.navbar-menu');
+    const toggleNav = () => {
+        const cur = nav.getAttribute('aria-expanded') === 'true';
+        nav.setAttribute('aria-expanded', !cur);
+    };
+</script>
+
 <style>
+    :root {
+        --background-color: #1c1c1c;
+        --text-color: #e0e0e0;
+        --accent-color: #bb86fc;
+    }
+
     .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         background-color: var(--background-color);
         padding: 1rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .navbar ul {
+    .navbar-brand {
+        flex: 1;
+    }
+
+    .navbar-brand span {
+        font-size: 2rem; /* Increased font size */
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    .navbar-menu {
         list-style: none;
         display: flex;
         justify-content: center;
+        flex: 2;
         margin: 0;
         padding: 0;
     }
 
-    .navbar li {
+    .nav-item {
         margin: 0 1rem;
     }
 
-    .navbar a {
+    .nav-item a {
         color: var(--text-color);
         text-decoration: none;
         font-weight: bold;
         padding: 0.5rem 1rem;
         border-radius: 5px;
-        transition: background-color 0.3s, color 0.3s;
+        transition: color 0.3s, border-bottom 0.3s;
     }
 
-    .navbar a:hover,
-    .navbar a:focus {
-        background-color: var(--accent-color);
-        color: var(--background-color);
+    .nav-item.active a {
+        border-bottom: 2px solid var(--accent-color);
+    }
+
+    .nav-item a:hover,
+    .nav-item a:focus {
+        color: var(--accent-color);
     }
 
     .resume-btn {
         border: 2px solid var(--accent-color);
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: bold;
     }
 
     .resume-btn:hover,
     .resume-btn:focus {
-        background-color: var(--background-color);
-        color: var(--accent-color);
+        background-color: var(--accent-color);
+        color: var(--background-color);
     }
 </style>
