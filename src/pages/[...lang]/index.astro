@@ -44,6 +44,14 @@ const projects = [
         <header>
             <h1>{t('My Portfolio')}</h1>
         </header>
+        <section id="intro">
+            <div class="intro-container">
+                <img src="/Face.png" alt="Face" class="face-image" />
+                <blockquote class="quote">
+                    <em>"This is a placeholder waiting for the existential life-changing and awe-inspiring quote!  ------ - Great Engineer Thommy 2024"</em>
+                </blockquote>
+            </div>
+        </section>
         <section id="about">
             <h2>{t('About Me')}</h2>
             <p>{t('I am a passionate game software engineer with experience in creating immersive gaming experiences. Specializing in game development and design, I enjoy bringing virtual worlds to life.')}</p>
@@ -118,6 +126,28 @@ const projects = [
 
     p {
         line-height: 1.6;
+    }
+
+    .intro-container {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .face-image {
+        width: 150px;
+        border: 2px solid var(--accent-color);
+        border-radius: 50%;
+    }
+
+    .quote {
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        margin: 0;
+        line-height: 1.5;
+        text-align: left;
+        flex-grow: 1;
     }
 
     .gallery {
