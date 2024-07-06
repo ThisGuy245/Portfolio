@@ -20,27 +20,31 @@ const routes: Route[] = [
     </div>
     <ul class="navbar-menu">
         <li class={`nav-item ${currentPage === `/${lang}` ? 'active' : ''}`}>
-            <a href={`/${lang}`}>Home{t('Home')}</a>
+            <a href={`/${lang}`}>{t('Home')}</a>
         </li>
         <li class={`nav-item ${currentPage === `/${lang}/projects` ? 'active' : ''}`}>
-            <a href={`/${lang}/projects`}>Projects{t('Projects')}</a>
+            <a href={`/${lang}/projects`}>{t('Projects')}</a>
         </li>
         <li class={`nav-item ${currentPage === `/${lang}/about` ? 'active' : ''}`}>
-            <a href={`/${lang}/about`}>About{t('About')}</a>
+            <a href={`/${lang}/about`}>{t('About')}</a>
         </li>
         <li class="nav-item">
-            <a href={`/${lang}/resume.pdf`} target="_blank" class="resume-btn">Resume{t('Resume')}</a>
+            <a href={`/${lang}/resume.pdf`} target="_blank" class="resume-btn">{t('Resume')}</a>
         </li>
     </ul>
+    <div class="navbar-icons">
+        <a href="https://www.linkedin.com" target="_blank">
+            <img src="/linkedin.svg" alt="LinkedIn">
+        </a>
+        <a href="https://www.github.com" target="_blank">
+            <img src="/github.svg" alt="GitHub">
+        </a>
+        <a href="https://www.instagram.com" target="_blank">
+            <img src="/instagram.svg" alt="Instagram">
+        </a>
+    </div>
+    <LanguagePicker />
 </nav>
-
-<script is:inline>
-    const nav = document.querySelector('.navbar-menu');
-    const toggleNav = () => {
-        const cur = nav.getAttribute('aria-expanded') === 'true';
-        nav.setAttribute('aria-expanded', !cur);
-    };
-</script>
 
 <style>
     :root {
@@ -112,5 +116,21 @@ const routes: Route[] = [
     .resume-btn:focus {
         background-color: var(--accent-color);
         color: var(--background-color);
+    }
+
+    .navbar-icons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .navbar-icons img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1); /* Ensures icons are white */
+        transition: filter 0.3s;
+    }
+
+    .navbar-icons img:hover {
+        filter: brightness(0) invert(0.7); /* Slightly darker icon on hover */
     }
 </style>
