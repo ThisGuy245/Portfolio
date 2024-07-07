@@ -11,11 +11,6 @@ export async function getStaticPaths() {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const images = [
-    {src: '/Main 1.webp', alt: 'Main1'},
-    {src: '/Main 2.webp', alt: 'Main2'},
-    {src: '/Main 3.webp', alt: 'Main3'}
-];
 
 const projects = [
     {
@@ -58,11 +53,6 @@ const projects = [
         </section>
         <section id="projects">
             <h2>{t('Projects')}</h2>
-            <div class="gallery">
-                {images.map(image => (
-                        <img src={image.src} alt={image.alt} />
-                ))}
-            </div>
             <ul class="project-cards">
                 {projects.map(project => (
                         <li class="link-card">

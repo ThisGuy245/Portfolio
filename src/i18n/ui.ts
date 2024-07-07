@@ -6,10 +6,28 @@ export const languages : {key: string, name: string}[] = [
 export const defaultLang : "en-GB" = 'en-GB';
 
 export const ui = {
-    'en-GB' : {
+    'en-GB': {
+        'Home': 'Home',
+        'Projects': 'Projects',
+        'Activity': 'Activity',
+        'About': 'About',
+        'Contact': 'Contact',
+        'Guestbook': 'Guestbook',
+        'Not found': 'Not found',
+        'Path': 'Path',
 
+        'Games': 'Games',
+        'Web': 'Web',
+        'Music': 'Music',
     },
-    'fr-FR' : {
 
+    'fr-FR': {
+        'Home': 'Accueil',
+        'Projects': 'Projets',
+        'Activity': 'Activité',
+        'About': 'À propos',
+        'Contact': 'Contact',
+        'Not found': 'Pas trouvé',
+        'Path': 'Chemin',
     }
 } as const;

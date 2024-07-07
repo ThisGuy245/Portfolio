@@ -63,8 +63,50 @@ const filterProjects = (category) => {
                 ))}
             </div>
         </section>
-        <section id="projects">
-            <h2>{t('Projects')}</h2>
+        <section id="games">
+            <h2>{t('Games')}</h2>
+            <ul class="project-cards">
+                {projects.filter(project => project.category === selectedCategory).map(project => (
+                        <li class="link-card">
+                            <a href={project.href}>
+                                <div class="iframe-container">
+                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
+                                </div>
+                                <h2>
+                                    {project.title}
+                                    <span>&rarr;</span>
+                                </h2>
+                                <p>
+                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
+                                </p>
+                            </a>
+                        </li>
+                ))}
+            </ul>
+        </section>
+        <section id="web">
+            <h2>{t('Web')}</h2>
+            <ul class="project-cards">
+                {projects.filter(project => project.category === selectedCategory).map(project => (
+                        <li class="link-card">
+                            <a href={project.href}>
+                                <div class="iframe-container">
+                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
+                                </div>
+                                <h2>
+                                    {project.title}
+                                    <span>&rarr;</span>
+                                </h2>
+                                <p>
+                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
+                                </p>
+                            </a>
+                        </li>
+                ))}
+            </ul>
+        </section>
+        <section id="music">
+            <h2>{t('Music')}</h2>
             <ul class="project-cards">
                 {projects.filter(project => project.category === selectedCategory).map(project => (
                         <li class="link-card">

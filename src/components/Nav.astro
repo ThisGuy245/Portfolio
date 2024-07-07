@@ -1,12 +1,11 @@
 ---
-import type { Route } from '../util/types';
-import { getLangFromUrl, useTranslations } from '../i18n/utils';
-import LanguagePicker from './LanguagePicker.astro';
+import { getLangFromUrl } from '../i18n/utils';
+import { useTranslations } from '../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const currentPage = Astro.url.pathname.replace(/\/$/, '');
-const routes: Route[] = [
+
+const routes = [
     { title: t('Home'), path: `/${lang}` },
     { title: t('Projects'), path: `/${lang}/projects` },
     { title: t('About'), path: `/${lang}/about` },
@@ -19,13 +18,13 @@ const routes: Route[] = [
         <span>Thomas Isherwood</span>
     </div>
     <ul class="navbar-menu">
-        <li class={`nav-item ${currentPage === `/${lang}` ? 'active' : ''}`}>
+        <li class={`nav-item ${Astro.url.pathname === `/${lang}` ? 'active' : ''}`}>
             <a href={`/${lang}`}>{t('Home')}</a>
         </li>
-        <li class={`nav-item ${currentPage === `/${lang}/projects` ? 'active' : ''}`}>
+        <li class={`nav-item ${Astro.url.pathname === `/${lang}/projects` ? 'active' : ''}`}>
             <a href={`/${lang}/projects`}>{t('Projects')}</a>
         </li>
-        <li class={`nav-item ${currentPage === `/${lang}/about` ? 'active' : ''}`}>
+        <li class={`nav-item ${Astro.url.pathname === `/${lang}/about` ? 'active' : ''}`}>
             <a href={`/${lang}/about`}>{t('About')}</a>
         </li>
         <li class="nav-item">
@@ -43,8 +42,24 @@ const routes: Route[] = [
             <img src="/instagram.svg" alt="Instagram">
         </a>
     </div>
-    <LanguagePicker />
+    <div class="language-picker">
+        <button id="langToggleBtn">
+            <img id="language-flag" src={`/languageFlags/${lang}.svg`} alt={`${lang} flag`} width="40" height="40">
+        </button>
+    </div>
 </nav>
+
+<script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentLang = '<?php echo $lang; ?>';
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        langToggleBtn.addEventListener('click', () => {
+            const newLang = currentLang === 'en-GB' ? 'fr-FR' : 'en-GB';
+            const newPath = window.location.pathname.replace(`/${currentLang}/`, `/${newLang}/`);
+            window.location.replace(newPath);
+        });
+    });
+</script>
 
 <style>
     :root {
@@ -67,7 +82,7 @@ const routes: Route[] = [
     }
 
     .navbar-brand span {
-        font-size: 2rem; /* Increased font size */
+        font-size: 2rem;
         font-weight: bold;
         color: var(--text-color);
     }
@@ -126,11 +141,35 @@ const routes: Route[] = [
     .navbar-icons img {
         width: 24px;
         height: 24px;
-        filter: brightness(0) invert(1); /* Ensures icons are white */
+        filter: brightness(0) invert(1);
         transition: filter 0.3s;
     }
 
     .navbar-icons img:hover {
-        filter: brightness(0) invert(0.7); /* Slightly darker icon on hover */
+        filter: brightness(0) invert(0.7);
+    }
+
+    .language-picker {
+        display: flex;
+        align-items: center;
+    }
+
+    .language-picker button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+    }
+
+    .language-picker img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .language-picker img:hover {
+        transform: scale(1.05);
     }
 </style>
