@@ -4,7 +4,12 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const domain = Astro.url.origin;
 ---
+
+<link rel="alternate" hreflang="x-default" href=`${domain}/en/` />
+<link rel="alternate" hreflang="en" href=`${domain}/en/` />
+<link rel="alternate" hreflang="fr" href=`${domain}/fr/` />
 
 <!doctype html>
 <html lang="en">

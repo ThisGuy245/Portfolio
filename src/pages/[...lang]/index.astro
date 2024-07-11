@@ -12,71 +12,45 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 
-const projects = [
-    {
-        title: 'Unity Game Project',
-        body: 'A thrilling action-adventure game developed using Unity. Explore vast worlds and engage in epic battles.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    },
-    {
-        title: 'SDL2 Game Demo',
-        body: 'A classic 2D platformer built with SDL2. Experience the nostalgia of retro gaming with modern enhancements.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    },
-    {
-        title: 'Unreal Engine Showcase',
-        body: 'An immersive VR experience showcasing the capabilities of Unreal Engine. Dive into stunningly realistic environments.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    }
-];
 ---
 <Layout title={t('Welcome')}>
     <Nav lang={lang} />
-    <main>
-        <header>
-            <h1>{t('My Portfolio')}</h1>
-        </header>
-        <section id="intro">
-            <div class="intro-container">
-                <img src="/Face.png" alt="Face" class="face-image" />
-                <blockquote class="quote">
-                    <em>"This is a placeholder waiting for the existential life-changing and awe-inspiring quote!  ------ - Great Engineer Thommy 2024"</em>
-                </blockquote>
-            </div>
-        </section>
+    <main class="main">
+        <img src="/Face.jpg" alt="Face" class="face-image" />
+        <blockquote class="quote">
+            <em>"This is a placeholder waiting for the existential life-changing and awe-inspiring quote!  ------ - Great Engineer Thommy 2024"</em>
+        </blockquote>
+
+                <div class="navbar-icons">
+                    <a href="https://www.linkedin.com" target="_blank">
+                        <img src="/linkedin.svg" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.github.com" target="_blank">
+                        <img src="/github.svg" alt="GitHub">
+                    </a>
+                    <a href="mailto:thomasisherwood@outlook.com" target="_blank">
+                        <img src="/envelope-solid.svg" alt="Email">
+                    </a>
+                </div>
+
         <section id="about">
             <h2>{t('About Me')}</h2>
             <p>{t('I am a passionate game software engineer with experience in creating immersive gaming experiences. Specializing in game development and design, I enjoy bringing virtual worlds to life.')}</p>
         </section>
-        <section id="projects">
-            <h2>{t('Projects')}</h2>
-            <ul class="project-cards">
-                {projects.map(project => (
-                        <li class="link-card">
-                            <a href={project.href}>
-                                <div class="iframe-container">
-                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
-                                </div>
-                                <h2>
-                                    {project.title}
-                                    <span>&rarr;</span>
-                                </h2>
-                                <p>
-                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
-                                </p>
-                            </a>
-                        </li>
-                ))}
+        <div>
+            <h2>Skills</h2>
+            <ul>
+                <li>skill 1</li>
+                <li>skill 2</li>
+                <li>skill 3</li>
+                <li>skill 4</li>
+                <li>skill 5</li>
+                <li>skill 6</li>
+                <li>skill 7</li>
             </ul>
-        </section>
-        <section id="contact">
-            <h2>{t('Contact')}</h2>
-            <p>{t('Email')}: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-            <p>{t('LinkedIn')}: <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn Profile</a></p>
-        </section>
+        </div>
+
+
     </main>
 </Layout>
 
@@ -97,6 +71,8 @@ const projects = [
 
     main {
         padding: 2rem;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
     }
 
     header h1 {
@@ -106,6 +82,10 @@ const projects = [
 
     section {
         margin-bottom: 2rem;
+    }
+
+    #about {
+        grid-column: span 5 / span 5;
     }
 
     h2 {
@@ -129,15 +109,20 @@ const projects = [
         width: 150px;
         border: 2px solid var(--accent-color);
         border-radius: 50%;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        place-self: center;
     }
 
-    .quote {
+    blockquote {
         font-size: 1.5rem;
         color: var(--accent-color);
         margin: 0;
         line-height: 1.5;
         text-align: left;
         flex-grow: 1;
+        grid-column: span 5 / span 5;
+        place-self: center;
     }
 
     .gallery {
@@ -236,5 +221,23 @@ const projects = [
 
     .link-card:is(:hover, :focus-within) h2 {
         color: rgb(var(--accent-light));
+    }
+
+    .navbar-icons {
+        display: flex;
+        gap: 1rem;
+        place-items: center;
+        justify-content: center;
+    }
+
+    .navbar-icons img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+        transition: filter 0.3s;
+    }
+
+    .navbar-icons img:hover {
+        filter: brightness(0) invert(0.7);
     }
 </style>

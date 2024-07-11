@@ -7,15 +7,15 @@ const lang = getLangFromUrl(Astro.url);
 ---
 
 <div class="my-auto flex flex-col">
-	<button onclick="showLangs();">
+	<button class="bg-transparent" onclick="showLangs();">
 		<Image loading="eager" width="40" height="40" class="size-10 rounded-full transition-transform ease-in-out duration-300 hover:scale-105" src=`/languageFlags/${lang}.svg` alt=`${lang} flag` />
 	</button>
 	<div id="langOptions" class="absolute -ml-4 -mt-4 hidden flex-col gap-4 rounded-2xl bg-neutral-950/30 p-4 shadow-2xl backdrop-blur-md">
-		<button onclick="closeLangs();">
+		<button class="bg-transparent" onclick="closeLangs();">
 			<Image width="40" height="40" class="size-10 rounded-full transition-transform ease-in-out duration-300 hover:scale-105" src=`/languageFlags/${lang}.svg` alt={lang} />
 		</button>
 		{languages.map(l => l.key != lang &&
-			<button data-lang={l.key} onclick="changeLang(this.dataset.lang);">
+			<button class="bg-transparent" data-lang={l.key} onclick="changeLang(this.dataset.lang);">
 				<Image width="40" height="40" class="size-10 rounded-full transition-transform ease-in-out duration-300 hover:scale-105" src=`/languageFlags/${l.key}.svg` alt={l.name} />
 			</button>
 		)}
@@ -24,12 +24,94 @@ const lang = getLangFromUrl(Astro.url);
 
 <script is:inline>
 	const select = document.getElementById('langOptions');
-	const showLangs = () => select.classList.replace('hidden', 'flex');
+	const showLangs = () => {
+		select.classList.replace('hidden', 'flex');
+	}
 	const closeLangs = () => select.classList.replace('flex', 'hidden');
 
 	const changeLang = (lang) => {
 		closeLangs();
-		const newPath = window.location.href.replace(/\/[a-z]{2}-[A-Z]{2}\//, `/${lang}/`);
+		console.log(window.location.href);
+		const newPath = window.location.href.replace(/\/[a-z]{2}\//, `/${lang}/`);
 		window.location.replace(newPath);
 	};
 </script>
+
+<style>
+
+	.absolute {
+		position: absolute;
+	}
+	.my-auto {
+		margin-top: auto;
+		margin-bottom: auto;
+	}
+	.-ml-4 {
+		margin-left: -1rem;
+	}
+	.-mt-4 {
+		margin-top: -1rem;
+	}
+	.flex {
+		display: flex;
+	}
+	.hidden {
+		display: none;
+	}
+	.size-10 {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+	.scale-105 {
+		--tw-scale-x: 1.05;
+		--tw-scale-y: 1.05;
+		transform: scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+	}
+	.flex-col {
+		flex-direction: column;
+	}
+	.gap-4 {
+		gap: 1rem;
+	}
+	.rounded-2xl {
+		border-radius: 1rem;
+	}
+	.rounded-full {
+		border-radius: 9999px;
+	}
+	.bg-neutral-950\/30 {
+		background-color: rgb(10 10 10 / 0.3);
+	}
+	.p-4 {
+		padding: 1rem;
+	}
+	.shadow-2xl {
+		--tw-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+		--tw-shadow-colored: 0 25px 50px -12px;
+		box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-shadow);
+	}
+	.backdrop-blur-md {
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
+	}
+	.transition-transform {
+		transition-property: transform;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 150ms;
+	}
+	.duration-300 {
+		transition-duration: 300ms;
+	}
+	.ease-in-out {
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	.hover\:scale-105:hover {
+		--tw-scale-x: 1.05;
+		--tw-scale-y: 1.05;
+		transform: scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+	}
+	.bg-transparent {
+		background-color: transparent;
+		border: none;
+	}
+</style>

@@ -1,6 +1,7 @@
 ---
 import { getLangFromUrl } from '../i18n/utils';
 import { useTranslations } from '../i18n/utils';
+import LanguagePicker from "./LanguagePicker.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -18,8 +19,8 @@ const routes = [
         <span>Thomas Isherwood</span>
     </div>
     <ul class="navbar-menu">
-        <li class={`nav-item ${Astro.url.pathname === `/${lang}` ? 'active' : ''}`}>
-            <a href={`/${lang}`}>{t('Home')}</a>
+        <li class={`nav-item ${Astro.url.pathname === `/${lang}/` ? 'active' : ''}`}>
+            <a href={`/${lang}/`}>{t('Home')}</a>
         </li>
         <li class={`nav-item ${Astro.url.pathname === `/${lang}/projects` ? 'active' : ''}`}>
             <a href={`/${lang}/projects`}>{t('Projects')}</a>
@@ -31,35 +32,10 @@ const routes = [
             <a href={`/${lang}/resume.pdf`} target="_blank" class="resume-btn">{t('Resume')}</a>
         </li>
     </ul>
-    <div class="navbar-icons">
-        <a href="https://www.linkedin.com" target="_blank">
-            <img src="/linkedin.svg" alt="LinkedIn">
-        </a>
-        <a href="https://www.github.com" target="_blank">
-            <img src="/github.svg" alt="GitHub">
-        </a>
-        <a href="https://www.instagram.com" target="_blank">
-            <img src="/instagram.svg" alt="Instagram">
-        </a>
-    </div>
-    <div class="language-picker">
-        <button id="langToggleBtn">
-            <img id="language-flag" src={`/languageFlags/${lang}.svg`} alt={`${lang} flag`} width="40" height="40">
-        </button>
-    </div>
-</nav>
+    <LanguagePicker />
 
-<script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-        const currentLang = '<?php echo $lang; ?>';
-        const langToggleBtn = document.getElementById('langToggleBtn');
-        langToggleBtn.addEventListener('click', () => {
-            const newLang = currentLang === 'en-GB' ? 'fr-FR' : 'en-GB';
-            const newPath = window.location.pathname.replace(`/${currentLang}/`, `/${newLang}/`);
-            window.location.replace(newPath);
-        });
-    });
-</script>
+
+</nav>
 
 <style>
     :root {
@@ -70,16 +46,13 @@ const routes = [
 
     .navbar {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-evenly;
         align-items: center;
         background-color: var(--background-color);
         padding: 1rem;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    .navbar-brand {
-        flex: 1;
-    }
 
     .navbar-brand span {
         font-size: 2rem;
@@ -133,22 +106,6 @@ const routes = [
         color: var(--background-color);
     }
 
-    .navbar-icons {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .navbar-icons img {
-        width: 24px;
-        height: 24px;
-        filter: brightness(0) invert(1);
-        transition: filter 0.3s;
-    }
-
-    .navbar-icons img:hover {
-        filter: brightness(0) invert(0.7);
-    }
-
     .language-picker {
         display: flex;
         align-items: center;
@@ -171,5 +128,11 @@ const routes = [
 
     .language-picker img:hover {
         transform: scale(1.05);
+    }
+
+    .space {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
     }
 </style>

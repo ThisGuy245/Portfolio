@@ -1,12 +1,12 @@
 export const languages : {key: string, name: string}[] = [
-    {key: 'en-GB', name: 'English'},
-    {key: 'fr-Fr', name: 'Français'}
+    {key: 'en', name: 'English'},
+    {key: 'fr', name: 'Français'}
 ]
 
-export const defaultLang : "en-GB" = 'en-GB';
+export const defaultLang : "en" = 'en';
 
 export const ui = {
-    'en-GB': {
+    'en': {
         'Home': 'Home',
         'Projects': 'Projects',
         'Activity': 'Activity',
@@ -15,13 +15,14 @@ export const ui = {
         'Guestbook': 'Guestbook',
         'Not found': 'Not found',
         'Path': 'Path',
+        'Resume': 'Resume',
 
         'Games': 'Games',
         'Web': 'Web',
         'Music': 'Music',
     },
 
-    'fr-FR': {
+    'fr': {
         'Home': 'Accueil',
         'Projects': 'Projets',
         'Activity': 'Activité',
@@ -29,5 +30,10 @@ export const ui = {
         'Contact': 'Contact',
         'Not found': 'Pas trouvé',
         'Path': 'Chemin',
+        'Resume': 'Resumé',
+
+        'Games': 'Jeux',
+        'Web': 'Web',
+        'Music': 'Musique',
     }
 } as const;
