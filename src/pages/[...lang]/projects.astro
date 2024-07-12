@@ -1,8 +1,11 @@
 ---
 import Nav from '../../components/Nav.astro'; // Adjust the path as necessary
+import Card from '../../components/Card.astro';
 import { languages } from '../../i18n/ui';
-import { getLangFromUrl, translate, useTranslations } from '../../i18n/utils';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
+import { projects } from '../../util/projects';
+import { useState } from 'react';
 
 export async function getStaticPaths() {
     return languages.map(lang => ({ params: { lang: lang.key } }));
@@ -11,41 +14,14 @@ export async function getStaticPaths() {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const images = [
-    { src: '/Main 1.webp', alt: 'Games' },
-    { src: '/Main 2.webp', alt: 'Web' },
-    { src: '/Main 3.webp', alt: 'Music' }
-];
-
-const projects = [
-    {
-        category: 'Games',
-        title: 'Unity Game Project',
-        body: 'A thrilling action-adventure game developed using Unity. Explore vast worlds and engage in epic battles.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    },
-    {
-        category: 'Games',
-        title: 'SDL2 Game Demo',
-        body: 'A classic 2D platformer built with SDL2. Experience the nostalgia of retro gaming with modern enhancements.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    },
-    {
-        category: 'Music',
-        title: 'Unreal Engine Showcase',
-        body: 'An immersive VR experience showcasing the capabilities of Unreal Engine. Dive into stunningly realistic environments.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    }
-];
-
-let selectedCategory = 'Games';
+const [selectedCategory, setSelectedCategory] = useState('Games');
 
 const filterProjects = (category) => {
-    selectedCategory = category;
+    setSelectedCategory(category);
+    return projects.filter(project => project.category === category);
 };
+
+const filteredProjects = filterProjects(selectedCategory);
 ---
 <Layout title={t('Welcome')}>
     <Nav lang={lang} />
@@ -53,83 +29,21 @@ const filterProjects = (category) => {
         <header>
             <h1>{t('My Portfolio')}</h1>
         </header>
-        <section id="categories">
-            <div class="categories">
-                {images.map(image => (
-                        <div class="category" onClick={() => filterProjects(image.alt)}>
-                            <img src={image.src} alt={image.alt} />
-                            <h2>{image.alt}</h2>
-                        </div>
-                ))}
+        <div class="categories">
+            <div class="category" onClick={() => filterProjects('Games')}>
+                <h2>Games</h2>
             </div>
-        </section>
-        <section id="games">
-            <h2>{t('Games')}</h2>
-            <ul class="project-cards">
-                {projects.filter(project => project.category === selectedCategory).map(project => (
-                        <li class="link-card">
-                            <a href={project.href}>
-                                <div class="iframe-container">
-                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
-                                </div>
-                                <h2>
-                                    {project.title}
-                                    <span>&rarr;</span>
-                                </h2>
-                                <p>
-                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
-                                </p>
-                            </a>
-                        </li>
-                ))}
-            </ul>
-        </section>
-        <section id="web">
-            <h2>{t('Web')}</h2>
-            <ul class="project-cards">
-                {projects.filter(project => project.category === selectedCategory).map(project => (
-                        <li class="link-card">
-                            <a href={project.href}>
-                                <div class="iframe-container">
-                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
-                                </div>
-                                <h2>
-                                    {project.title}
-                                    <span>&rarr;</span>
-                                </h2>
-                                <p>
-                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
-                                </p>
-                            </a>
-                        </li>
-                ))}
-            </ul>
-        </section>
-        <section id="music">
-            <h2>{t('Music')}</h2>
-            <ul class="project-cards">
-                {projects.filter(project => project.category === selectedCategory).map(project => (
-                        <li class="link-card">
-                            <a href={project.href}>
-                                <div class="iframe-container">
-                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
-                                </div>
-                                <h2>
-                                    {project.title}
-                                    <span>&rarr;</span>
-                                </h2>
-                                <p>
-                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
-                                </p>
-                            </a>
-                        </li>
-                ))}
-            </ul>
-        </section>
-        <section id="contact">
-            <h2>{t('Contact')}</h2>
-            <p>{t('Email')}: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-            <p>{t('LinkedIn')}: <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn Profile</a></p>
+            <div class="category" onClick={() => filterProjects('Web')}>
+                <h2>Web</h2>
+            </div>
+            <div class="category" onClick={() => filterProjects('Music')}>
+                <h2>Music</h2>
+            </div>
+        </div>
+        <section class="project-cards">
+            {filteredProjects.map(project => (
+                    <Card project={project} />
+            ))}
         </section>
     </main>
 </Layout>
@@ -177,6 +91,7 @@ const filterProjects = (category) => {
         display: flex;
         justify-content: center;
         gap: 2rem;
+        margin-bottom: 2rem;
     }
 
     .category {
@@ -184,15 +99,7 @@ const filterProjects = (category) => {
         cursor: pointer;
     }
 
-    .category img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        border: 2px solid var(--accent-color);
-    }
-
     .category h2 {
-        margin-top: 0.5rem;
         color: var(--accent-color);
     }
 
@@ -208,59 +115,5 @@ const filterProjects = (category) => {
         .project-cards {
             grid-template-columns: repeat(2, 1fr);
         }
-    }
-
-    .link-card {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        padding: 1px;
-        background-color: #23262d;
-        border-radius: 7px;
-        transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    .link-card > a {
-        width: 100%;
-        text-decoration: none;
-        line-height: 1.4;
-        padding: calc(1.5rem - 1px);
-        border-radius: 8px;
-        color: white;
-        background-color: #23262d;
-        opacity: 0.8;
-    }
-
-    .iframe-container {
-        width: 100%;
-        height: 200px;
-        overflow: hidden;
-        border-radius: 7px 7px 0 0;
-    }
-
-    .iframe-container iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-    p {
-        margin-top: 0.5rem;
-        margin-bottom: 0;
-    }
-
-    .read-more {
-        color: var(--accent-color);
-        cursor: pointer;
-    }
-
-    .link-card:is(:hover, :focus-within) {
-        background-position: 0;
-        background-image: var(--accent-gradient);
-    }
-
-    .link-card:is(:hover, :focus-within) h2 {
-        color: rgb(var(--accent-light));
     }
 </style>
