@@ -1,110 +1,95 @@
 ---
-import Nav from '../../components/Nav.astro'; // Adjust the path as necessary
+import { useState } from 'react';
 import Card from '../../components/Card.astro';
-import { languages } from '../../i18n/ui';
-import { getLangFromUrl, useTranslations } from '../../i18n/utils';
-import Layout from '../../layouts/Layout.astro';
-import { projects } from '../../util/projects';
 
-export async function getStaticPaths() {
-    return languages.map(lang => ({ params: { lang: lang.key } }));
-}
+// Import MDX files
+import CybervadersContent from '../../content/Games/Cybervaders.mdx';
+import PortfolioContent from '../../content/Web/Portfolio.mdx';
+import LeDomaineContent from '../../content/Web/Le-Domaine.mdx';
 
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
+// Define the project metadata
+const allProjects = [
+    {
+        id: 1,
+        category: 'Games',
+        title: 'Cybervaders (2024)',
+        body: 'This project is a take on the Space Shooter genre...',
+        href: '#',
+        videoSrc: '/media/bug_shooter.mp4',
+        placeholderImg: '/media/placeholder.png',
+        content: CybervadersContent,
+    },
+    {
+        id: 2,
+        category: 'Web',
+        title: 'Portfolio (2024)',
+        body: 'This project is a site for my portfolio...',
+        href: '#',
+        placeholderImg: '/media/placeholder.png',
+        content: PortfolioContent,
+    },
+    {
+        id: 3,
+        category: 'Web',
+        title: 'Le Domaine (2024)',
+        body: 'Le Domaine is a site for a Guesthouse in...',
+        href: '#',
+        placeholderImg: '/media/placeholder.png',
+        content: LeDomaineContent,
+    },
+];
 
+const [activeCategory, setActiveCategory] = useState('All');
+
+const categories = ['All', 'Games', 'Web', 'Music', 'Other'];
+
+const filteredProjects = activeCategory === 'All'
+    ? allProjects
+    : allProjects.filter(project => project.category === activeCategory);
 ---
-<Layout title={t('Welcome')}>
-    <Nav lang={lang} />
-    <main>
-        <header>
-            <h1>{t('My Portfolio')}</h1>
-        </header>
-        <div class="categories">
-            <div class="category" onClick={() => filterProjects('Games')}>
-                <h2>Games</h2>
-            </div>
-            <div class="category" onClick={() => filterProjects('Web')}>
-                <h2>Web</h2>
-            </div>
-            <div class="category" onClick={() => filterProjects('Music')}>
-                <h2>Music</h2>
-            </div>
-        </div>
-        <section class="project-cards">
-            {filteredProjects.map(project => (
-                    <Card project={project} />
-            ))}
-        </section>
-    </main>
-</Layout>
+
+<div class="filter-container">
+    {categories.map(category => (
+            <button
+                    class={activeCategory === category ? 'active' : ''}
+                    onClick={() => setActiveCategory(category)}
+            >
+                {category}
+            </button>
+    ))}
+</div>
+
+<div class="projects-grid">
+    {filteredProjects.map(project => (
+            <Card project={project} key={project.id} />
+    ))}
+</div>
 
 <style>
-    :root {
-        --background-color: #121212;
-        --text-color: #e0e0e0;
-        --accent-color: #bb86fc;
-    }
-
-    body {
-        background-color: var(--background-color);
-        color: var(--text-color);
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    main {
-        padding: 2rem;
-    }
-
-    header h1 {
-        text-align: center;
-        color: var(--accent-color);
-    }
-
-    section {
-        margin-bottom: 2rem;
-    }
-
-    h2 {
-        color: var(--accent-color);
-        border-bottom: 2px solid var(--accent-color);
-        padding-bottom: 0.5rem;
-        text-align: center;
-    }
-
-    p {
-        line-height: 1.6;
-    }
-
-    .categories {
+    .filter-container {
         display: flex;
         justify-content: center;
-        gap: 2rem;
-        margin-bottom: 2rem;
+        margin-bottom: 20px;
     }
-
-    .category {
-        text-align: center;
+    .filter-container button {
+        padding: 10px 20px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 5px;
+        background-color: #23262d;
+        color: white;
         cursor: pointer;
+        transition: background-color 0.3s ease;
     }
-
-    .category h2 {
-        color: var(--accent-color);
+    .filter-container button.active {
+        background-color: var(--accent-color);
     }
-
-    .project-cards {
+    .filter-container button:hover {
+        background-color: var(--accent-light);
+    }
+    .projects-grid {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        list-style: none;
-        padding: 0;
-    }
-
-    @media (min-width: 768px) {
-        .project-cards {
-            grid-template-columns: repeat(2, 1fr);
-        }
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
     }
 </style>
