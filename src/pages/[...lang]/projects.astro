@@ -1,95 +1,222 @@
+
 ---
-import { useState } from 'react';
-import Card from '../../components/Card.astro';
+import Nav from '../../components/Nav.astro';
+import Accordion from '../../components/Accordion.svelte';// Adjust the path as necessary
+import {languages} from '../../i18n/ui';
+import {getLangFromUrl, translate, useTranslations} from '../../i18n/utils';
+import Layout from '../../layouts/Layout.astro';
 
-// Import MDX files
-import CybervadersContent from '../../content/Games/Cybervaders.mdx';
-import PortfolioContent from '../../content/Web/Portfolio.mdx';
-import LeDomaineContent from '../../content/Web/Le-Domaine.mdx';
+export async function getStaticPaths() {
+    return languages.map(lang => ({params: {lang: lang.key}}));
+}
 
-// Define the project metadata
-const allProjects = [
-    {
-        id: 1,
-        category: 'Games',
-        title: 'Cybervaders (2024)',
-        body: 'This project is a take on the Space Shooter genre...',
-        href: '#',
-        videoSrc: '/media/bug_shooter.mp4',
-        placeholderImg: '/media/placeholder.png',
-        content: CybervadersContent,
-    },
-    {
-        id: 2,
-        category: 'Web',
-        title: 'Portfolio (2024)',
-        body: 'This project is a site for my portfolio...',
-        href: '#',
-        placeholderImg: '/media/placeholder.png',
-        content: PortfolioContent,
-    },
-    {
-        id: 3,
-        category: 'Web',
-        title: 'Le Domaine (2024)',
-        body: 'Le Domaine is a site for a Guesthouse in...',
-        href: '#',
-        placeholderImg: '/media/placeholder.png',
-        content: LeDomaineContent,
-    },
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const images = [
+    {src: '/Main 1.webp', alt: 'Main1'},
+    {src: '/Main 2.webp', alt: 'Main2'},
+    {src: '/Main 3.webp', alt: 'Main3'}
 ];
 
-const [activeCategory, setActiveCategory] = useState('All');
-
-const categories = ['All', 'Games', 'Web', 'Music', 'Other'];
-
-const filteredProjects = activeCategory === 'All'
-    ? allProjects
-    : allProjects.filter(project => project.category === activeCategory);
+const projects = [
+    {
+        title: 'Unity Game Project',
+        body: 'A thrilling action-adventure game developed using Unity. Explore vast worlds and engage in epic battles.',
+        href: '#',
+        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
+    },
+    {
+        title: 'SDL2 Game Demo',
+        body: 'A classic 2D platformer built with SDL2. Experience the nostalgia of retro gaming with modern enhancements.',
+        href: '#',
+        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
+    },
+    {
+        title: 'Unreal Engine Showcase',
+        body: 'An immersive VR experience showcasing the capabilities of Unreal Engine. Dive into stunningly realistic environments.',
+        href: '#',
+        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
+    }
+];
 ---
+<Layout title={t('Welcome')}>
+    <Nav lang={lang} />
+    <main>
+        <header>
+            <h1>{t('My Portfolio')}</h1>
+        </header>
+        <section id="about">
+            <h2>{t('About Me')}</h2>
+            <p>{t('I am a passionate game software engineer with experience in creating immersive gaming experiences. Specializing in game development and design, I enjoy bringing virtual worlds to life.')}</p>
+        </section>
+        <section id="projects">
+            <h2>{t('Projects')}</h2>
+            <div class="gallery">
+                {images.map(image => (
+                        <img src={image.src} alt={image.alt} />
+                ))}
+            </div>
+            <ul class="project-cards">
+                {projects.map(project => (
+                        <li class="link-card">
+                            <a href={project.href}>
+                                <div class="iframe-container">
+                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
+                                </div>
+                                <h2>
+                                    {project.title}
+                                    <span>&rarr;</span>
+                                </h2>
+                                <p>
+                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
+                                </p>
+                            </a>
+                        </li>
+                ))}
+            </ul>
+        </section>
 
-<div class="filter-container">
-    {categories.map(category => (
-            <button
-                    class={activeCategory === category ? 'active' : ''}
-                    onClick={() => setActiveCategory(category)}
-            >
-                {category}
-            </button>
-    ))}
-</div>
 
-<div class="projects-grid">
-    {filteredProjects.map(project => (
-            <Card project={project} key={project.id} />
-    ))}
-</div>
+        <Accordion/>
+
+
+    </main>
+</Layout>
 
 <style>
-    .filter-container {
+    :root {
+        --background-color: #121212;
+        --text-color: #e0e0e0;
+        --accent-color: #bb86fc;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        padding: 2rem;
+    }
+
+    header h1 {
+        text-align: center;
+        color: var(--accent-color);
+    }
+
+    section {
+        margin-bottom: 2rem;
+    }
+
+    h2 {
+        color: var(--accent-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 0.5rem;
+    }
+
+    p {
+        line-height: 1.6;
+    }
+
+    .gallery {
         display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
+        gap: 1rem;
     }
-    .filter-container button {
-        padding: 10px 20px;
-        margin: 0 5px;
-        border: none;
-        border-radius: 5px;
-        background-color: #23262d;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+
+    .gallery img {
+        width: 100%;
+        max-width: 200px;
+        border: 2px solid var(--accent-color);
+        border-radius: 8px;
     }
-    .filter-container button.active {
-        background-color: var(--accent-color);
+
+    a {
+        color: var(--accent-color);
+        text-decoration: none;
     }
-    .filter-container button:hover {
-        background-color: var(--accent-light);
+
+    a:hover {
+        text-decoration: underline;
     }
-    .projects-grid {
+
+    .project-cards {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        list-style: none;
+        padding: 0;
+    }
+
+    @media (min-width: 768px) {
+        .project-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .link-card {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        padding: 1px;
+        background-color: #23262d;
+        background-image: none;
+        background-size: 400%;
+        border-radius: 7px;
+        background-position: 100%;
+        transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .link-card > a {
+        width: 100%;
+        text-decoration: none;
+        line-height: 1.4;
+        padding: calc(1.5rem - 1px);
+        border-radius: 8px;
+        color: white;
+        background-color: #23262d;
+        opacity: 0.8;
+    }
+
+    .iframe-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 7px 7px 0 0;
+    }
+
+    .iframe-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    h2 {
+        margin: 1rem 0 0;
+        font-size: 1.25rem;
+        transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    p {
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+
+    .read-more {
+        color: var(--accent-color);
+        cursor: pointer;
+    }
+
+    .link-card:is(:hover, :focus-within) {
+        background-position: 0;
+        background-image: var(--accent-gradient);
+    }
+
+    .link-card:is(:hover, :focus-within) h2 {
+        color: rgb(var(--accent-light));
     }
 </style>

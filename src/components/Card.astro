@@ -15,12 +15,12 @@ const { project } = Astro.props;
 ---
 
 <li class="link-card">
-	<a href={project.href}>
+	<a href={project.href} aria-label={project.title}>
 		<div class="media-container">
 			{project.videoSrc ? (
-				<video playsinline autoplay loop muted src={project.videoSrc}></video>
+				<video playsinline autoplay loop muted src={project.videoSrc} aria-label={`Video for ${project.title}`}></video>
 			) : (
-				<img src={project.placeholderImg} alt="Placeholder image" />
+				<img src={project.placeholderImg} alt={`Placeholder for ${project.title}`} />
 			)}
 		</div>
 		<h2>
@@ -28,7 +28,7 @@ const { project } = Astro.props;
 			<span>&rarr;</span>
 		</h2>
 		<p>
-			{project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
+			{project.body.length > 100 ? `${project.body.slice(0, 100)}...` : project.body} <span class="read-more">READ MORE</span>
 		</p>
 	</a>
 </li>
@@ -56,6 +56,7 @@ const { project } = Astro.props;
 		color: white;
 		background-color: #23262d;
 		opacity: 0.8;
+		display: block;
 	}
 
 	.media-container {
@@ -71,7 +72,6 @@ const { project } = Astro.props;
 		height: 100%;
 		object-fit: cover;
 		border: none;
-		overflow: hidden;
 	}
 
 	h2 {
@@ -90,12 +90,19 @@ const { project } = Astro.props;
 		cursor: pointer;
 	}
 
-	.link-card:is(:hover, :focus-within) {
+	.link-card:hover,
+	.link-card:focus-within {
 		background-position: 0;
 		background-image: var(--accent-gradient);
 	}
 
-	.link-card:is(:hover, :focus-within) h2 {
+	.link-card:hover h2,
+	.link-card:focus-within h2 {
 		color: rgb(var(--accent-light));
+	}
+
+	.link-card:focus {
+		outline: 2px solid var(--accent-color);
+		outline-offset: 4px;
 	}
 </style>

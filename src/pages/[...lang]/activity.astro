@@ -1,5 +1,6 @@
 ---
-import Nav from '../../components/Nav.astro'; // Adjust the path as necessary
+import Nav from '../../components/Nav.astro';
+import Accordion from '../../components/Accordion.svelte';// Adjust the path as necessary
 import {languages} from '../../i18n/ui';
 import {getLangFromUrl, translate, useTranslations} from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
@@ -74,11 +75,26 @@ const projects = [
                 ))}
             </ul>
         </section>
-        <section id="contact">
-            <h2>{t('Contact')}</h2>
-            <p>{t('Email')}: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-            <p>{t('LinkedIn')}: <a href="https://www.linkedin.com/in/yourprofile" target="_blank">LinkedIn Profile</a></p>
-        </section>
+        <Accordion client:load>
+            <span slot="head">This is my header</span>
+            <div slot="details">
+                <p>
+                    These are the details.
+                </p>
+            </div>
+        </Accordion>
+        <Accordion client:load open={true}>
+            <span slot="head">This is my header number two, it's quite long so should span multiple lines (if not: please resize the window!)</span>
+            <div slot="details">
+                <p>
+                    These are the second details.
+                </p>
+                <p>
+                    This can naturally span multiple lines.
+                </p>
+            </div>
+        </Accordion>
+
     </main>
 </Layout>
 

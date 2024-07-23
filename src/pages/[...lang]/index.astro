@@ -4,12 +4,19 @@ import {languages} from '../../i18n/ui';
 import {getLangFromUrl, translate, useTranslations} from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
 
+import { getSortedPosts, getPopularPosts } from '../../util/posts';
+
+const recentPosts = getSortedPosts().slice(0, 5);
+const popularPosts = getPopularPosts().slice(0, 5);
+
 export async function getStaticPaths() {
     return languages.map(lang => ({params: {lang: lang.key}}));
 }
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+const web = await Astro.glob('../../content/web/*.mdx');
 
 
 ---
@@ -52,6 +59,24 @@ const t = useTranslations(lang);
         <div class="quote">
             lorem50*
         </div>
+
+        <h2>Popular Posts</h2>
+        <ul>
+            {popularPosts.map(post => (
+                    <li id={post.id}>
+                        <a href={`/posts/${post.id}`}>{post.title}</a>
+                    </li>
+            ))}
+        </ul>
+
+        <ul>
+            {web.map(w => (
+                <li>
+                    <w.Content />
+                </li>
+            ))}
+        </ul>
+
 
 
     </main>
