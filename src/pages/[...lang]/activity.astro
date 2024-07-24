@@ -12,91 +12,16 @@ export async function getStaticPaths() {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const images = [
-    {src: '/Main 1.webp', alt: 'Main1'},
-    {src: '/Main 2.webp', alt: 'Main2'},
-    {src: '/Main 3.webp', alt: 'Main3'}
-];
-
-const projects = [
-    {
-        title: 'Unity Game Project',
-        body: 'A thrilling action-adventure game developed using Unity. Explore vast worlds and engage in epic battles.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    },
-    {
-        title: 'SDL2 Game Demo',
-        body: 'A classic 2D platformer built with SDL2. Experience the nostalgia of retro gaming with modern enhancements.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    },
-    {
-        title: 'Unreal Engine Showcase',
-        body: 'An immersive VR experience showcasing the capabilities of Unreal Engine. Dive into stunningly realistic environments.',
-        href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
-    }
-];
 ---
 <Layout title={t('Welcome')}>
     <Nav lang={lang} />
     <main>
-        <header>
-            <h1>{t('My Portfolio')}</h1>
-        </header>
-        <section id="about">
-            <h2>{t('About Me')}</h2>
-            <p>{t('I am a passionate game software engineer with experience in creating immersive gaming experiences. Specializing in game development and design, I enjoy bringing virtual worlds to life.')}</p>
-        </section>
-        <section id="projects">
-            <h2>{t('Projects')}</h2>
-            <div class="gallery">
-                {images.map(image => (
-                        <img src={image.src} alt={image.alt} />
-                ))}
-            </div>
-            <ul class="project-cards">
-                {projects.map(project => (
-                        <li class="link-card">
-                            <a href={project.href}>
-                                <div class="iframe-container">
-                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
-                                </div>
-                                <h2>
-                                    {project.title}
-                                    <span>&rarr;</span>
-                                </h2>
-                                <p>
-                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
-                                </p>
-                            </a>
-                        </li>
-                ))}
-            </ul>
-        </section>
-        <Accordion client:load>
-            <span slot="head">This is my header</span>
-            <div slot="details">
-                <p>
-                    These are the details.
-                </p>
-            </div>
-        </Accordion>
-        <Accordion client:load open={true}>
-            <span slot="head">This is my header number two, it's quite long so should span multiple lines (if not: please resize the window!)</span>
-            <div slot="details">
-                <p>
-                    These are the second details.
-                </p>
-                <p>
-                    This can naturally span multiple lines.
-                </p>
-            </div>
-        </Accordion>
-
+        <Accordion  client:load open={true} id="games"/>
+        <Accordion  client:load open={true} id="web"/>
+        <Accordion  client:load open={true} id="music"/>
     </main>
 </Layout>
+
 
 <style>
     :root {
