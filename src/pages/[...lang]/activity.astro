@@ -1,161 +1,243 @@
 ---
-import Nav from '../../components/Nav.astro';
-import Accordion from '../../components/Accordion.svelte';// Adjust the path as necessary
-import {languages} from '../../i18n/ui';
-import {getLangFromUrl, translate, useTranslations} from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import { languages } from '../../i18n/ui';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 export async function getStaticPaths() {
-    return languages.map(lang => ({params: {lang: lang.key}}));
+    return languages.map(lang => ({
+        params: { lang: lang.key }
+    }));
 }
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+const posts = [
+    {
+        id: '1',
+        title: "Upcoming Unity Game Project",
+        date: "July 20, 2024",
+        preview: "Discover the new features and gameplay mechanics we are incorporating in our latest Unity game...",
+        content: "Full content of the Unity game project blog post...",
+        category: "games" // category for image
+    },
+    {
+        id: '2',
+        title: "SDL2 Game Demo Released",
+        date: "June 15, 2024",
+        preview: "Our SDL2 game demo is now live! Check out the classic 2D platformer experience...",
+        content: "Full content of the SDL2 game demo blog post...",
+        category: "games"
+    },
+    {
+        id: '3',
+        title: "Exploring VR with Unreal Engine",
+        date: "May 10, 2024",
+        preview: "We are diving into virtual reality with Unreal Engine, creating immersive environments...",
+        content: "Full content of the Unreal Engine VR exploration blog post...",
+        category: "games"
+    },
+    {
+        id: '4',
+        title: "New Music Album Release",
+        date: "August 5, 2024",
+        preview: "Check out our new music album with fresh beats and rhythms...",
+        content: "Full content of the music album release blog post...",
+        category: "music"
+    },
+    {
+        id: '5',
+        title: "Building Modern Web Apps",
+        date: "July 12, 2024",
+        preview: "Explore best practices for building modern, scalable web applications...",
+        content: "Full content of the web app development blog post...",
+        category: "web"
+    }
+];
+
+const showModal = (postId) => {
+    document.getElementById('modal-overlay').style.display = 'block';
+    document.getElementById(`modal-${postId}`).style.display = 'block';
+};
+
+const closeModal = (postId) => {
+    document.getElementById(`modal-${postId}`).style.display = 'none';
+    document.getElementById('modal-overlay').style.display = 'none';
+};
 ---
-<Layout title={t('Welcome')}>
+
+<Layout title={t('Activity')}>
     <Nav lang={lang} />
     <main>
-        <Accordion  client:load open={true} id="games"/>
-        <Accordion  client:load open={true} id="web"/>
-        <Accordion  client:load open={true} id="music"/>
+        <header>
+            <h1>Activity</h1>
+            <p>Check out my latest blog posts and project updates.</p>
+        </header>
+        <section id="blog-posts">
+            {posts.map(post => (
+                    <div class="blog-card" onClick={() => showModal(post.id)} key={post.id} style={{ backgroundImage: `url('/media/${post.category}.jpg')` }}>
+                        <div class="content">
+                            <h2>{post.title}</h2>
+                            <p>{post.date}</p>
+                            <p>{post.preview}</p>
+                        </div>
+                    </div>
+            ))}
+        </section>
+
+        {posts.map(post => (
+                <div id={`modal-${post.id}`} class="modal" style={{ display: 'none' }} key={`modal-${post.id}`}>
+                    <div class="modal-content">
+                        <span class="close" onClick={() => closeModal(post.id)}>&times;</span>
+                        <h2>{post.title}</h2>
+                        <p>{post.date}</p>
+                        <div>{post.content}</div>
+                    </div>
+                </div>
+        ))}
+        <div id="modal-overlay" class="modal-overlay" style={{ display: 'none' }}></div>
     </main>
 </Layout>
 
-
 <style>
-    :root {
-        --background-color: #121212;
-        --text-color: #e0e0e0;
-        --accent-color: #bb86fc;
-    }
-
     body {
-        background-color: var(--background-color);
-        color: var(--text-color);
         font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
+        color: #e0e0e0;
+        background-color: #121212;
+        overflow: hidden; /* Prevent scroll on body when modal is open */
     }
 
-    main {
+    h1, h2 {
+        color: #bb86fc;
+    }
+
+    .blog-card {
+        background-color: #23262d;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        position: relative; /* Needed for the absolute positioning of the gradient */
+        overflow: hidden; /* To ensure no overflow of the gradient */
+        display: flex; /* Ensure content and background image align */
+        align-items: center; /* Center the content vertically */
+        min-height: 150px; /* Adjust as needed */
+        color: #e0e0e0;
+        background-size: cover; /* Cover the background image */
+        background-position: center; /* Center the background image */
+    }
+
+    .blog-card:hover {
+        background-color: #33363e;
+    }
+
+    .blog-card .content {
+        z-index: 1; /* Ensure content is above the gradient */
+        position: relative; /* Ensure content is above the gradient */
+    }
+
+    .blog-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%; /* Adjust the width as needed */
+        height: 100%;
+        background: linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 70%); /* Gradient effect */
+        filter: blur(8px); /* Adjust the blur as needed */
+        z-index: 0;
+    }
+
+    .modal, .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        transition: opacity 0.3s ease; /* Smooth transition for modal overlay */
+    }
+
+    .modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.8);
+        overflow-y: auto;
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.3s ease; /* Smooth transition for modal */
+    }
+
+    .modal-content {
+        background-color: #23262d;
         padding: 2rem;
+        border-radius: 10px;
+        max-width: 80%;
+        position: relative;
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.3s ease; /* Smooth transition for content */
     }
 
-    header h1 {
-        text-align: center;
-        color: var(--accent-color);
+    .modal-content.show {
+        opacity: 1;
     }
 
-    section {
-        margin-bottom: 2rem;
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #bb86fc;
     }
 
-    h2 {
-        color: var(--accent-color);
-        border-bottom: 2px solid var(--accent-color);
-        padding-bottom: 0.5rem;
+    .modal-overlay {
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.3s ease; /* Smooth transition for overlay */
     }
 
-    p {
+    .modal.show {
+        opacity: 1;
+    }
+
+    .modal-overlay.show {
+        opacity: 1;
+    }
+
+    .modal-content h2 {
+        margin-top: 0;
+    }
+
+    .modal-content p {
         line-height: 1.6;
     }
-
-    .gallery {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .gallery img {
-        width: 100%;
-        max-width: 200px;
-        border: 2px solid var(--accent-color);
-        border-radius: 8px;
-    }
-
-    a {
-        color: var(--accent-color);
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    .project-cards {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        list-style: none;
-        padding: 0;
-    }
-
-    @media (min-width: 768px) {
-        .project-cards {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    .link-card {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        padding: 1px;
-        background-color: #23262d;
-        background-image: none;
-        background-size: 400%;
-        border-radius: 7px;
-        background-position: 100%;
-        transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    .link-card > a {
-        width: 100%;
-        text-decoration: none;
-        line-height: 1.4;
-        padding: calc(1.5rem - 1px);
-        border-radius: 8px;
-        color: white;
-        background-color: #23262d;
-        opacity: 0.8;
-    }
-
-    .iframe-container {
-        width: 100%;
-        height: 200px;
-        overflow: hidden;
-        border-radius: 7px 7px 0 0;
-    }
-
-    .iframe-container iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-    h2 {
-        margin: 1rem 0 0;
-        font-size: 1.25rem;
-        transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    p {
-        margin-top: 0.5rem;
-        margin-bottom: 0;
-    }
-
-    .read-more {
-        color: var(--accent-color);
-        cursor: pointer;
-    }
-
-    .link-card:is(:hover, :focus-within) {
-        background-position: 0;
-        background-image: var(--accent-gradient);
-    }
-
-    .link-card:is(:hover, :focus-within) h2 {
-        color: rgb(var(--accent-light));
-    }
 </style>
+
+<script>
+    document.querySelectorAll('.blog-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const postId = this.getAttribute('data-id');
+            document.getElementById('modal-overlay').classList.add('show');
+            document.getElementById(`modal-${postId}`).classList.add('show');
+        });
+    });
+
+    document.querySelectorAll('.close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            const postId = this.closest('.modal').getAttribute('id').split('-')[1];
+            document.getElementById(`modal-${postId}`).classList.remove('show');
+            document.getElementById('modal-overlay').classList.remove('show');
+        });
+    });
+
+    document.getElementById('modal-overlay').addEventListener('click', function() {
+        document.querySelectorAll('.modal.show').forEach(modal => {
+            modal.classList.remove('show');
+        });
+        this.classList.remove('show');
+    });
+</script>
