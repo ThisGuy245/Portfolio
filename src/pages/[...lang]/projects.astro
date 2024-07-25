@@ -1,45 +1,65 @@
-
 ---
 import Nav from '../../components/Nav.astro';
-import Accordion from '../../components/Accordion.svelte';// Adjust the path as necessary
-import {languages} from '../../i18n/ui';
-import {getLangFromUrl, translate, useTranslations} from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/Card.astro';
+import { languages } from '../../i18n/ui';
+import { getLangFromUrl, translate, useTranslations } from '../../i18n/utils';
 
 export async function getStaticPaths() {
-    return languages.map(lang => ({params: {lang: lang.key}}));
+    return languages.map(lang => ({ params: { lang: lang.key } }));
 }
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-const images = [
-    {src: '/Main 1.webp', alt: 'Main1'},
-    {src: '/Main 2.webp', alt: 'Main2'},
-    {src: '/Main 3.webp', alt: 'Main3'}
-];
 
 const projects = [
     {
         title: 'Unity Game Project',
         body: 'A thrilling action-adventure game developed using Unity. Explore vast worlds and engage in epic battles.',
         href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
+        videoSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4',
+        placeholderImg: '/path/to/placeholder.jpg', // Fallback image
+        category: 'Games'
     },
     {
         title: 'SDL2 Game Demo',
         body: 'A classic 2D platformer built with SDL2. Experience the nostalgia of retro gaming with modern enhancements.',
         href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
+        videoSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4',
+        placeholderImg: '/path/to/placeholder.jpg',
+        category: 'Games'
     },
     {
-        title: 'Unreal Engine Showcase',
-        body: 'An immersive VR experience showcasing the capabilities of Unreal Engine. Dive into stunningly realistic environments.',
+        title: 'Personal Portfolio Website',
+        body: 'A personal website showcasing my work and projects. Built using modern web technologies.',
         href: '#',
-        iframeSrc: 'https://www.youtube.com/embed/ScMzIvxBSi4'
+        placeholderImg: '/path/to/website-placeholder.jpg',
+        category: 'Web'
+    },
+    {
+        title: 'Music Streaming App',
+        body: 'An app that allows users to stream and discover new music. Built with a focus on user experience.',
+        href: '#',
+        placeholderImg: '/path/to/music-placeholder.jpg',
+        category: 'Music'
     }
 ];
+
+function categorizeProjects(projects) {
+    const categories = projects.reduce((acc, project) => {
+        const { category } = project;
+        if (!acc[category]) {
+            acc[category] = [];
+        }
+        acc[category].push(project);
+        return acc;
+    }, {});
+    return categories;
+}
+
+const categorizedProjects = categorizeProjects(projects);
 ---
+
 <Layout title={t('Welcome')}>
     <Nav lang={lang} />
     <main>
@@ -52,100 +72,32 @@ const projects = [
         </section>
         <section id="projects">
             <h2>{t('Projects')}</h2>
-            <div class="gallery">
-                {images.map(image => (
-                        <img src={image.src} alt={image.alt} />
-                ))}
-            </div>
-            <ul class="project-cards">
-                {projects.map(project => (
-                        <li class="link-card">
-                            <a href={project.href}>
-                                <div class="iframe-container">
-                                    <iframe src={project.iframeSrc} title={project.title}></iframe>
-                                </div>
-                                <h2>
-                                    {project.title}
-                                    <span>&rarr;</span>
-                                </h2>
-                                <p>
-                                    {project.body.slice(0, 100)}... <span class="read-more">READ MORE</span>
-                                </p>
-                            </a>
-                        </li>
-                ))}
-            </ul>
+            {Object.entries(categorizedProjects).map(([category, projects]) => (
+                    <div key={category}>
+                        <h3 class="category-header">{category}</h3>
+                        <ul class="project-cards">
+                            {projects.map(project => (
+                                    <ProjectCard project={project} />
+                            ))}
+                        </ul>
+                    </div>
+            ))}
         </section>
-
-
-        <Accordion/>
-
-
     </main>
 </Layout>
 
 <style>
-    :root {
-        --background-color: #121212;
-        --text-color: #e0e0e0;
-        --accent-color: #bb86fc;
-    }
-
-    body {
-        background-color: var(--background-color);
+    .category-header {
+        font-size: 1.5rem;
         color: var(--text-color);
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    main {
-        padding: 2rem;
-    }
-
-    header h1 {
-        text-align: center;
-        color: var(--accent-color);
-    }
-
-    section {
-        margin-bottom: 2rem;
-    }
-
-    h2 {
-        color: var(--accent-color);
         border-bottom: 2px solid var(--accent-color);
         padding-bottom: 0.5rem;
-    }
-
-    p {
-        line-height: 1.6;
-    }
-
-    .gallery {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .gallery img {
-        width: 100%;
-        max-width: 200px;
-        border: 2px solid var(--accent-color);
-        border-radius: 8px;
-    }
-
-    a {
-        color: var(--accent-color);
-        text-decoration: none;
-    }
-
-    a:hover {
-        text-decoration: underline;
+        margin: 1rem 0;
     }
 
     .project-cards {
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 1rem;
         list-style: none;
         padding: 0;
@@ -153,70 +105,13 @@ const projects = [
 
     @media (min-width: 768px) {
         .project-cards {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
     }
 
-    .link-card {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        padding: 1px;
-        background-color: #23262d;
-        background-image: none;
-        background-size: 400%;
-        border-radius: 7px;
-        background-position: 100%;
-        transition: background-position 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    .link-card > a {
-        width: 100%;
-        text-decoration: none;
-        line-height: 1.4;
-        padding: calc(1.5rem - 1px);
-        border-radius: 8px;
-        color: white;
-        background-color: #23262d;
-        opacity: 0.8;
-    }
-
-    .iframe-container {
-        width: 100%;
-        height: 200px;
-        overflow: hidden;
-        border-radius: 7px 7px 0 0;
-    }
-
-    .iframe-container iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-
-    h2 {
-        margin: 1rem 0 0;
-        font-size: 1.25rem;
-        transition: color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    p {
-        margin-top: 0.5rem;
-        margin-bottom: 0;
-    }
-
-    .read-more {
-        color: var(--accent-color);
-        cursor: pointer;
-    }
-
-    .link-card:is(:hover, :focus-within) {
-        background-position: 0;
-        background-image: var(--accent-gradient);
-    }
-
-    .link-card:is(:hover, :focus-within) h2 {
-        color: rgb(var(--accent-light));
+    @media (min-width: 1024px) {
+        .project-cards {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
     }
 </style>

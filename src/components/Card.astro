@@ -1,10 +1,12 @@
 ---
+// components/ProjectCard.astro
 interface Project {
 	title: string;
 	body: string;
 	href: string;
 	videoSrc?: string;
 	placeholderImg: string;
+	category: 'Games' | 'Web' | 'Music';
 }
 
 interface Props {
@@ -13,7 +15,6 @@ interface Props {
 
 const { project } = Astro.props;
 ---
-
 <li class="link-card">
 	<a href={project.href} aria-label={project.title}>
 		<div class="media-container">
