@@ -1,6 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
+import BlogPostList from '../../components/BlogPostList.svelte';
+import { posts } from '../../util/data'
+
+
 import { languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
@@ -13,90 +17,18 @@ export async function getStaticPaths() {
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const posts = [
-    {
-        id: '1',
-        title: "Upcoming Unity Game Project",
-        date: "July 20, 2024",
-        preview: "Discover the new features and gameplay mechanics we are incorporating in our latest Unity game...",
-        content: "Full content of the Unity game project blog post...",
-        category: "games" // category for image
-    },
-    {
-        id: '2',
-        title: "SDL2 Game Demo Released",
-        date: "June 15, 2024",
-        preview: "Our SDL2 game demo is now live! Check out the classic 2D platformer experience...",
-        content: "Full content of the SDL2 game demo blog post...",
-        category: "games"
-    },
-    {
-        id: '3',
-        title: "Exploring VR with Unreal Engine",
-        date: "May 10, 2024",
-        preview: "We are diving into virtual reality with Unreal Engine, creating immersive environments...",
-        content: "Full content of the Unreal Engine VR exploration blog post...",
-        category: "games"
-    },
-    {
-        id: '4',
-        title: "New Music Album Release",
-        date: "August 5, 2024",
-        preview: "Check out our new music album with fresh beats and rhythms...",
-        content: "Full content of the music album release blog post...",
-        category: "music"
-    },
-    {
-        id: '5',
-        title: "Building Modern Web Apps",
-        date: "July 12, 2024",
-        preview: "Explore best practices for building modern, scalable web applications...",
-        content: "Full content of the web app development blog post...",
-        category: "web"
-    }
-];
-
-const showModal = (postId) => {
-    document.getElementById('modal-overlay').style.display = 'block';
-    document.getElementById(`modal-${postId}`).style.display = 'block';
-};
-
-const closeModal = (postId) => {
-    document.getElementById(`modal-${postId}`).style.display = 'none';
-    document.getElementById('modal-overlay').style.display = 'none';
-};
 ---
 
-<Layout title={t('Activity')}>
-    <Nav lang={lang} />
+<Layout title="Activity">
+    <Nav />
     <main>
         <header>
             <h1>Activity</h1>
             <p>Check out my latest blog posts and project updates.</p>
         </header>
         <section id="blog-posts">
-            {posts.map(post => (
-                    <div class="blog-card" onClick={() => showModal(post.id)} key={post.id} style={{ backgroundImage: `url('/media/${post.category}.jpg')` }}>
-                        <div class="content">
-                            <h2>{post.title}</h2>
-                            <p>{post.date}</p>
-                            <p>{post.preview}</p>
-                        </div>
-                    </div>
-            ))}
+            <BlogPostList client:load {posts} />
         </section>
-
-        {posts.map(post => (
-                <div id={`modal-${post.id}`} class="modal" style={{ display: 'none' }} key={`modal-${post.id}`}>
-                    <div class="modal-content">
-                        <span class="close" onClick={() => closeModal(post.id)}>&times;</span>
-                        <h2>{post.title}</h2>
-                        <p>{post.date}</p>
-                        <div>{post.content}</div>
-                    </div>
-                </div>
-        ))}
-        <div id="modal-overlay" class="modal-overlay" style={{ display: 'none' }}></div>
     </main>
 </Layout>
 
@@ -105,7 +37,6 @@ const closeModal = (postId) => {
         font-family: 'Arial', sans-serif;
         color: #e0e0e0;
         background-color: #121212;
-        overflow: hidden; /* Prevent scroll on body when modal is open */
     }
 
     h1, h2 {
@@ -216,28 +147,3 @@ const closeModal = (postId) => {
         line-height: 1.6;
     }
 </style>
-
-<script>
-    document.querySelectorAll('.blog-card').forEach(card => {
-        card.addEventListener('click', function() {
-            const postId = this.getAttribute('data-id');
-            document.getElementById('modal-overlay').classList.add('show');
-            document.getElementById(`modal-${postId}`).classList.add('show');
-        });
-    });
-
-    document.querySelectorAll('.close').forEach(closeBtn => {
-        closeBtn.addEventListener('click', function() {
-            const postId = this.closest('.modal').getAttribute('id').split('-')[1];
-            document.getElementById(`modal-${postId}`).classList.remove('show');
-            document.getElementById('modal-overlay').classList.remove('show');
-        });
-    });
-
-    document.getElementById('modal-overlay').addEventListener('click', function() {
-        document.querySelectorAll('.modal.show').forEach(modal => {
-            modal.classList.remove('show');
-        });
-        this.classList.remove('show');
-    });
-</script>
