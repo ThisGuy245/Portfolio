@@ -36,7 +36,7 @@ const domain = Astro.url.origin;
 		--accent-gradient: linear-gradient(
 			135deg,
 			rgb(var(--background-dark)),
-			rgb(var(--background-light)) 50%,
+			rgb(var(--background-light)) 45%,
 			rgb(var(--accent-light)) 90%,
 			rgb(var(--accent)) 100%
 		);
@@ -58,4 +58,26 @@ const domain = Astro.url.origin;
 			Courier New,
 			monospace;
 	}
+
+	body {
+		margin: 0;
+		padding: 0;
+		padding-top: 100px; /* Adjust this value based on the height of the navbar */
+	}
+
+	.navbar {
+		height: 60px; /* The fixed height of the navbar */
+	}
+
+	/* For mobile responsiveness, adjust the padding */
+	@media (max-width: 768px) {
+		body {
+			padding-top: 70px; /* Slightly less padding for smaller screens */
+		}
+
+		.navbar {
+			height: 50px;
+		}
+	}
+
 </style>
