@@ -78,6 +78,44 @@ const web = await Astro.glob('../../content/web/*.mdx');
             </ul>
         </section>
 
+        <section class="skills">
+            <h2>Skills</h2>
+
+            <!-- Web Development Skills -->
+            <div class="skills-category">
+                <h3>Web Development</h3>
+                <div class="skills-icons">
+                    <div class="icon" data-tooltip="Webstorm">
+                        <img src="/devicons/Webstorm.svg" alt="Webstorm Icon" />
+                    </div>
+                    <div class="icon" data-tooltip="VSCode">
+                        <img src="/devicons/VSCode.svg" alt="VSCode Icon" />
+                    </div>
+                    <div class="icon" data-tooltip="TypeScript">
+                        <img src="/devicons/TypeScript.svg" alt="TypeScript Icon" />
+                    </div>
+                    <!-- Add more web-related icons similarly -->
+                </div>
+            </div>
+
+            <!-- Game Development Skills -->
+            <div class="skills-category">
+                <h3>Game Development</h3>
+                <div class="skills-icons">
+                    <div class="icon" data-tooltip="Unity">
+                        <img src="/devicons/Unity.svg" alt="Unity Icon" />
+                    </div>
+                    <div class="icon" data-tooltip="Unreal">
+                        <img src="/devicons/Unreal.svg" alt="Unreal Icon" />
+                    </div>
+                    <div class="icon" data-tooltip="Godot">
+                        <img src="/devicons/Godot.svg" alt="Godot Icon" />
+                    </div>
+                    <!-- Add more game-related icons similarly -->
+                </div>
+            </div>
+        </section>
+
         <section class="web-content">
             <h2>{t('Web Projects')}</h2>
             <ul>
@@ -189,4 +227,62 @@ const web = await Astro.glob('../../content/web/*.mdx');
         display: table;
         clear: both;
     }
+    .skills {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .skills-category {
+        margin-top: 20px;
+    }
+
+    .skills-icons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .icon {
+        position: relative;
+        width: 50px;
+        height: 50px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .icon img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .icon:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Tooltip styling */
+    .icon[data-tooltip]:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        white-space: nowrap;
+        font-size: 12px;
+        opacity: 1;
+        visibility: visible;
+        z-index: 10;
+    }
+
+    .icon::after {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s;
+    }
+
 </style>
