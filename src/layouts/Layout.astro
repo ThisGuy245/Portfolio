@@ -1,48 +1,51 @@
 ---
-import {getLangFromUrl, useTranslations} from '../i18n/utils.ts';
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-
 interface Props {
 	title: string;
 }
 
-const {title} = Astro.props;
+const { title } = Astro.props;
 const domain = Astro.url.origin;
 ---
 
+<link rel="alternate" hreflang="x-default" href=`${domain}/en/` />
+<link rel="alternate" hreflang="en" href=`${domain}/en/` />
+<link rel="alternate" hreflang="fr" href=`${domain}/fr/` />
+
 <!doctype html>
-<html lang={lang} class="scroll-pt-[88px]">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="keywords" content="portfolio, Thomas Isherwood, games developer, programmer, CV, Resume, Hardouin-Isherwood" />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Astro description" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<meta name="generator" content={Astro.generator} />
+	<title>{title}</title>
+</head>
+<body>
+<slot />
+</body>
 </html>
+
 <style is:global>
 	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
+		/* Updated gradient colors: Navy blue with purple accents */
+		--accent: 136, 58, 234; /* Purple accent */
+		--accent-light: 102, 36, 152; /* Darker purple accent */
+		--background-light: 13, 17, 40; /* Dark navy blue */
+		--background-dark: 4, 6, 24; /* Deeper navy blue */
 		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
+			135deg,
+			rgb(var(--background-dark)),
+			rgb(var(--background-light)) 45%,
+			rgb(var(--accent-light)) 90%,
+			rgb(var(--accent)) 100%
 		);
 	}
 	html {
 		font-family: system-ui, sans-serif;
-		background: #13151a;
+		background: var(--accent-gradient);
 		background-size: 224px;
+		color: #e4e4e7; /* Soft off-white for better readability */
 	}
 	code {
 		font-family:
@@ -55,4 +58,26 @@ const domain = Astro.url.origin;
 			Courier New,
 			monospace;
 	}
+
+	body {
+		margin: 0;
+		padding: 0;
+		padding-top: 100px; /* Adjust this value based on the height of the navbar */
+	}
+
+	.navbar {
+		height: 60px; /* The fixed height of the navbar */
+	}
+
+	/* For mobile responsiveness, adjust the padding */
+	@media (max-width: 768px) {
+		body {
+			padding-top: 70px; /* Slightly less padding for smaller screens */
+		}
+
+		.navbar {
+			height: 50px;
+		}
+	}
+
 </style>
