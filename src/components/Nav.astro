@@ -31,8 +31,10 @@ const routes = [
                 <a href={`/${lang}/activity`}>{t('Activity')}</a>
             </li>
             <li class="nav-item">
-                <a href={`/${lang}/resume.pdf`} target="_blank" class="resume-btn">{t('Resume')}</a>
+                <a href="javascript:void(0);" class="resume-btn" onclick="window.open('/cv.docx', '_blank').print();">{t('Resume')}</a>
             </li>
+
+
         </ul>
         <LanguagePicker />
     </div>
