@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-    output: 'server', // or 'hybrid'
+    output: 'static', // or 'hybrid'
     // other config options
 });
