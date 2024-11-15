@@ -1,164 +1,138 @@
 ---
-import Nav from '../../components/Nav.astro'; // Adjust the path as necessary
+// Astro page with debugging
+import Nav from '../../components/Nav.astro';
 import { languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
 import { getSortedPosts, getPopularPosts } from '../../util/posts';
 
+console.log("Nav:", Nav); // Debugging import
+console.log("Layout:", Layout); // Debugging import
+console.log("getLangFromUrl:", getLangFromUrl); // Debugging function
+console.log("useTranslations:", useTranslations); // Debugging function
+
 const recentPosts = getSortedPosts().slice(0, 5);
 const popularPosts = getPopularPosts().slice(0, 5);
-
-export async function getStaticPaths() {
-    return languages.map(lang => ({ params: { lang: lang.key } }));
-}
-
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const web = await Astro.glob('../../content/web/*.mdx');
 ---
 
-<Layout title={t('Welcome')}>
+// Page structure
+<Layout title="Welcome">
     <Nav lang={lang} />
 
-    <!-- Main content container with padding to avoid overlap with navbar -->
+    <!-- Main content container -->
     <main class="main-content">
-        <header class="header">
-            <img src="/Face.jpg" alt="Profile Picture" class="face-image" />
-            <blockquote class="quote">
-                <em>"This is a placeholder waiting for the existential life-changing and awe-inspiring quote!  ------ - Great Engineer Thommy 2024"</em>
-            </blockquote>
+
+        <!-- About Me Section -->
+        <section class="about-section">
+            <div class="profile-photo">
+                <img src="/Face.jpg" alt="Thomas Isherwood" class="face-image" />
+            </div>
+
             <div class="navbar-icons">
-                <a href="https://www.linkedin.com" target="_blank">
-                    <img src="/linkedin.svg" alt="LinkedIn">
-                </a>
-                <a href="https://www.github.com" target="_blank">
-                    <img src="/github.svg" alt="GitHub">
-                </a>
-                <a href="mailto:thomasisherwood@outlook.com" target="_blank">
-                    <img src="/envelope-solid.svg" alt="Email">
-                </a>
+                <a href="https://www.linkedin.com" target="_blank"><img src="/linkedin.svg" alt="LinkedIn" /></a>
+                <a href="https://www.github.com" target="_blank"><img src="/github.svg" alt="GitHub" /></a>
+                <a href="mailto:thomasisherwood@outlook.com" target="_blank"><img src="/envelope-solid.svg" alt="Email" /></a>
             </div>
-        </header>
 
-        <section class="introduction">
-            <div class="intro-bubble">
-                <h2>{t('Who I Am')}</h2>
-                <p>{t('I am a passionate game software engineer specializing in Games, Music, and Web development. I enjoy creating immersive experiences and innovative solutions.')}</p>
+            <div class="about-bubble">
+                <p>
+                    I am a developer studying Games Software Engineering at Bournemouth University.
+                    I have experience in web development and a passion for sound engineering as well.
+                </p>
             </div>
+
+            <!-- Go to Projects Button -->
+            <a href="/projects" class="go-to-projects-btn">Go to Projects</a>
         </section>
 
-        <section class="about-me">
-            <div class="skills-sidebar">
-                <h2>Skills</h2>
-                <ul>
-                    <li>Skill 1</li>
-                    <li>Skill 2</li>
-                    <li>Skill 3</li>
-                    <li>Skill 4</li>
-                    <li>Skill 5</li>
-                    <li>Skill 6</li>
-                    <li>Skill 7</li>
-                </ul>
-            </div>
-            <div class="about-content">
-                <h2>{t('About Me')}</h2>
-                <p>{t('I am a passionate game software engineer with experience in creating immersive gaming experiences. Specializing in game development and design, I enjoy bringing virtual worlds to life.')}</p>
-            </div>
-        </section>
-
-        <section class="recent-posts">
-            <h2>{t('Popular Posts')}</h2>
-            <ul>
-                {popularPosts.map(post => (
-                        <li key={post.id}>
-                            <a href={`/posts/${post.id}`}>{post.title}</a>
-                        </li>
-                ))}
-            </ul>
-        </section>
-
-        <section class="skills">
+        <!-- Skills Section -->
+        <section class="skills-section">
             <h2>Skills</h2>
 
-            <!-- Web Development Skills -->
-            <div class="skills-category">
-                <h3>Web Development</h3>
-                <div class="skills-icons">
-                    <div class="icon" data-tooltip="Webstorm">
-                        <img src="/devicons/Webstorm.svg" alt="Webstorm Icon" />
-                    </div>
-                    <div class="icon" data-tooltip="VSCode">
-                        <img src="/devicons/VSCode.svg" alt="VSCode Icon" />
-                    </div>
-                    <div class="icon" data-tooltip="TypeScript">
-                        <img src="/devicons/TypeScript.svg" alt="TypeScript Icon" />
-                    </div>
-                    <!-- Add more web-related icons similarly -->
-                </div>
-            </div>
-
-            <!-- Game Development Skills -->
+            <!-- Games Skills -->
             <div class="skills-category">
                 <h3>Game Development</h3>
                 <div class="skills-icons">
-                    <div class="icon" data-tooltip="Unity">
-                        <img src="/devicons/Unity.svg" alt="Unity Icon" />
+                    <div class="skill-item">
+                        <img src="/devIcons/Unreal.svg" alt="Unreal Engine" />
+                        <p>Unreal Engine - 1 project, 2 years experience</p>
                     </div>
-                    <div class="icon" data-tooltip="Unreal">
-                        <img src="/devicons/Unreal.svg" alt="Unreal Icon" />
+                    <div class="skill-item">
+                        <img src="/devIcons/Unity.svg" alt="Unity" />
+                        <p>Unity - 2 projects, 3 years experience</p>
                     </div>
-                    <div class="icon" data-tooltip="Godot">
-                        <img src="/devicons/Godot.svg" alt="Godot Icon" />
+                    <div class="skill-item">
+                        <img src="/devIcons/Godot.svg" alt="Godot" />
+                        <p>Godot - 1 project, 1 year experience</p>
                     </div>
-                    <!-- Add more game-related icons similarly -->
+                    <!-- Add more game dev icons as needed -->
+                </div>
+            </div>
+
+            <!-- Web Skills -->
+            <div class="skills-category">
+                <h3>Web Development</h3>
+                <div class="skills-icons">
+                    <div class="skill-item">
+                        <img src="/devIcons/Astro.svg" alt="Astro" />
+                        <p>Astro</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/Svelte.svg" alt="Svelte" />
+                        <p>Svelte</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/TypeScript.svg" alt="TypeScript" />
+                        <p>TypeScript</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/JavaScript.svg" alt="JavaScript" />
+                        <p>JavaScript</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/HTML.svg" alt="HTML" />
+                        <p>HTML + CSS</p>
+                    </div>
+                    <!-- Add more web dev icons as needed -->
                 </div>
             </div>
         </section>
 
-        <section class="web-content">
-            <h2>{t('Web Projects')}</h2>
-            <ul>
-                {web.map(w => (
-                        <li key={w.slug}>
-                            <w.Content />
-                        </li>
-                ))}
-            </ul>
+        <!-- Contact Me Section -->
+        <section class="contact-section">
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out to discuss projects, collaborations, or just to connect!</p>
+            <a href="mailto:thomasisherwood@outlook.com" class="contact-btn">Get in Touch</a>
         </section>
+
     </main>
 </Layout>
 
 <style>
-    /* Spacing between navbar and page content */
+    /* General Layout Styles */
     .main-content {
-        padding-top: 80px; /* Adjust based on navbar height */
-        padding: 0 20px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #e4e4e7;
     }
 
-    .header {
+    /* About Me Section */
+    .about-section {
         text-align: center;
         margin-bottom: 40px;
-    }
-
-    .face-image {
-        border-radius: 50%;
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        margin-bottom: 20px;
-    }
-
-    .quote {
-        font-style: italic;
-        color: #bbb;
-        margin-bottom: 30px;
     }
 
     .navbar-icons {
         display: flex;
         justify-content: center;
-        gap: 20px;
+        gap: 15px;
+        margin-bottom: 15px;
     }
 
     .navbar-icons a img {
@@ -166,123 +140,98 @@ const web = await Astro.glob('../../content/web/*.mdx');
         height: 30px;
     }
 
-    .introduction, .about-me, .recent-posts, .web-content {
-        margin-bottom: 40px;
+    .profile-photo {
+        margin-top: 20px;
+    }
+    .face-image {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .intro-bubble {
+    .about-bubble {
         background: rgba(255, 255, 255, 0.1);
         padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        max-width: 800px;
-        margin: 0 auto;
+        border-radius: 12px;
+        max-width: 600px;
+        font-size: 1.1rem;
+        line-height: 1.5;
     }
 
-    .skills-sidebar {
-        float: left;
-        width: 30%;
-        margin-right: 40px;
-    }
-
-    .skills-sidebar h2 {
-        margin-bottom: 20px;
-    }
-
-    .about-content {
-        float: right;
-        width: 65%;
-    }
-
-    .about-content h2 {
-        margin-bottom: 20px;
-    }
-
-    .recent-posts ul, .web-content ul {
-        list-style: none;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
-    }
-
-    .recent-posts li, .web-content li {
-        background: rgba(0, 0, 0, 0.1);
-        padding: 15px;
-        border-radius: 10px;
-        text-align: center;
-    }
-
-    .recent-posts li a, .web-content li a {
+    .go-to-projects-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: rgba(136, 58, 234, 0.8);
         color: #fff;
+        border-radius: 5px;
         text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
-    .recent-posts li a:hover, .web-content li a:hover {
-        color: var(--accent-color);
+    .go-to-projects-btn:hover {
+        background-color: rgba(136, 58, 234, 1);
     }
 
-    .clear-fix:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-    .skills {
+    /* Skills Section */
+    .skills-section {
         text-align: center;
         margin-bottom: 40px;
     }
 
     .skills-category {
-        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
     .skills-icons {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 20px;
     }
 
-    .icon {
-        position: relative;
-        width: 50px;
-        height: 50px;
-        display: inline-block;
-        cursor: pointer;
+    .skill-item {
+        text-align: center;
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .icon img {
-        width: 100%;
-        height: auto;
-        transition: transform 0.2s ease-in-out;
+    .skill-item img {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+        transition: transform 0.2s;
     }
 
-    .icon:hover img {
+    .skill-item:hover img {
         transform: scale(1.1);
     }
 
-    /* Tooltip styling */
-    .icon[data-tooltip]:hover::after {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: -25px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(0, 0, 0, 0.8);
+    /* Contact Me Section */
+    .contact-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .contact-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: rgba(136, 58, 234, 0.8);
         color: #fff;
-        padding: 5px 10px;
         border-radius: 5px;
-        white-space: nowrap;
-        font-size: 12px;
-        opacity: 1;
-        visibility: visible;
-        z-index: 10;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
-    .icon::after {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s;
+    .contact-btn:hover {
+        background-color: rgba(136, 58, 234, 1);
     }
-
 </style>
