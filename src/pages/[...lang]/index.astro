@@ -17,6 +17,14 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const web = await Astro.glob('../../content/web/*.mdx');
+
+export async function getStaticPaths() {
+    return [
+        { params: { lang: 'en' } },
+        { params: { lang: 'fr' } }
+    ];
+}
+
 ---
 
 // Page structure
