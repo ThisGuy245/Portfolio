@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 
-
 export default defineConfig({
-    output: 'server',
+    output: 'static', // Static site generation for SiteGround
 });
