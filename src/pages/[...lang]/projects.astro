@@ -5,10 +5,12 @@ import ProjectCard from '../../components/ProjectCard.astro';
 import { languages } from '../../i18n/ui';
 import { getLangFromUrl, translate, useTranslations } from '../../i18n/utils';
 
-// Static paths for localization
 export async function getStaticPaths() {
-    return languages.map(lang => ({ params: { lang: lang.key } }));
+    return languages.map(lang => ({
+        params: { lang: lang.key }
+    }));
 }
+
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
