@@ -33,5 +33,6 @@ export const ui = {
         'Games': 'Jeux',
         'Web': 'Web',
         'Music': 'Musique',
+        
     }
 } as const;
