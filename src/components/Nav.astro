@@ -1,5 +1,5 @@
 ---
-// Astro component code remains the same
+// Mes Imports pour localisation
 import { getLangFromUrl } from '../i18n/utils';
 import { useTranslations } from '../i18n/utils';
 import LanguagePicker from "./LanguagePicker.astro";
@@ -7,6 +7,7 @@ import LanguagePicker from "./LanguagePicker.astro";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+// Les routes pour la navigation
 const routes = [
     { title: t('Home'), path: `/${lang}` },
     { title: t('Projects'), path: `/${lang}/projects` },

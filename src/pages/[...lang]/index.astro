@@ -51,7 +51,7 @@ const web = await Astro.glob('../../content/web/*.mdx');
             </div>
 
             <!-- Go to Projects Button -->
-            <a href="/projects" class="go-to-projects-btn">Go to Projects</a>
+            <a href="javascript:void(0);" class="go-to-projects-btn" onclick="goToProjects()">Go to Projects</a>
         </section>
 
         <!-- Skills Section -->
@@ -119,6 +119,16 @@ const web = await Astro.glob('../../content/web/*.mdx');
 
     </main>
 </Layout>
+
+<script>
+    function goToProjects() {
+        // Find the "Projects" navigation link and simulate a click
+        const projectsLink = document.querySelector('.navbar-menu .nav-item a[href$="/projects"]');
+        if (projectsLink) {
+            projectsLink.click();
+        }
+    }
+</script>
 
 <style>
     /* General Layout Styles */
