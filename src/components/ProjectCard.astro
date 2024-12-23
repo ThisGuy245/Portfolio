@@ -1,0 +1,148 @@
+---
+// ProjectCard.astro
+
+export interface ProjectCardProps {
+    project: {
+        title: string;
+        body: string;
+        href: string;
+        videoSrc?: string; // Optional video source
+        placeholderImg?: string; // Optional placeholder image if no video
+        icons?: string[]; // Optional array of icons
+    };
+}
+
+const { title, body, href, videoSrc, placeholderImg, icons } = Astro.props.project;
+---
+
+<div class="project-card">
+    <div class="media-container">
+        {videoSrc ? (
+            <video
+                src={videoSrc}
+                autoplay
+                muted
+                loop
+                playsinline
+                disablepictureinpicture
+                class="project-video"
+            >
+                Your browser does not support the video tag.
+            </video>
+        ) : (
+            <img src={placeholderImg} alt={title} class="project-image" />
+        )}
+    </div>
+
+    <div class="project-info">
+        <h3><a href={href}>{title}</a></h3>
+        <p>{body}</p>
+
+        {icons && (
+            <div class="icon-container">
+                {icons.map(icon => (
+                    <img src={icon} alt="Tech Icon" class="tech-icon" />
+                ))}
+            </div>
+        )}
+    </div>
+</div>
+
+<style>
+    .project-card {
+        background: rgba(var(--background-light), 0.8); /* Semi-transparent to blend with the gradient background */
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 1rem;
+        color: #e4e4e7;
+    }
+
+    .project-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .media-container {
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .media-container video,
+    .media-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .project-info h3 {
+        font-size: 1.5rem;
+        margin: 0 0 0.5rem;
+        color: #e4e4e7;
+    }
+
+    .project-info h3 a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .project-info h3 a:hover {
+        color: rgb(var(--accent));
+    }
+
+    .project-info p {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        color: #b0b0b8;
+    }
+
+    .icon-container {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+    }
+
+    .tech-icon {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1); /* Ensures icons blend with dark background */
+        opacity: 0.85;
+        transition: opacity 0.3s ease;
+    }
+
+    .tech-icon:hover {
+        opacity: 1;
+    }
+
+    .view-project-btn {
+        display: inline-block;
+        background-color: rgba(var(--accent), 0.85);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        text-align: center;
+        font-weight: 600;
+        margin-top: auto;
+    }
+
+    .view-project-btn:hover {
+        background-color: rgba(var(--accent-light), 1);
+    }
+</style>

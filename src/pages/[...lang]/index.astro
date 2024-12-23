@@ -1,222 +1,246 @@
 ---
-import Nav from '../../components/Nav.astro'; // Adjust the path as necessary
+// Astro page with debugging
+import Nav from '../../components/Nav.astro';
 import { languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import Layout from '../../layouts/Layout.astro';
 import { getSortedPosts, getPopularPosts } from '../../util/posts';
 
-const recentPosts = getSortedPosts().slice(0, 5);
-const popularPosts = getPopularPosts().slice(0, 5);
-
 export async function getStaticPaths() {
-    return languages.map(lang => ({ params: { lang: lang.key } }));
+    return languages.map(lang => ({
+        params: { lang: lang.key }
+    }));
 }
 
+console.log("Nav:", Nav); // Debugging import
+console.log("Layout:", Layout); // Debugging import
+console.log("getLangFromUrl:", getLangFromUrl); // Debugging function
+console.log("useTranslations:", useTranslations); // Debugging function
+
+const recentPosts = getSortedPosts().slice(0, 5);
+const popularPosts = getPopularPosts().slice(0, 5);
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const web = await Astro.glob('../../content/web/*.mdx');
 ---
 
-<Layout title={t('Welcome')}>
+<Layout title="Welcome">
     <Nav lang={lang} />
-    <main class="main">
-        <header class="header">
-            <img src="/Face.jpg" alt="Profile Picture" class="face-image" />
-            <blockquote class="quote">
-                <em>"This is a placeholder waiting for the existential life-changing and awe-inspiring quote!  ------ - Great Engineer Thommy 2024"</em>
-            </blockquote>
+
+    <!-- Main content container -->
+    <main class="main-content">
+
+        <!-- About Me Section -->
+        <section class="about-section">
+            <div class="profile-photo">
+                <img src="/Face.jpg" alt="Thomas Isherwood" class="face-image" />
+            </div>
+
             <div class="navbar-icons">
-                <a href="https://www.linkedin.com" target="_blank">
-                    <img src="/linkedin.svg" alt="LinkedIn">
-                </a>
-                <a href="https://www.github.com" target="_blank">
-                    <img src="/github.svg" alt="GitHub">
-                </a>
-                <a href="mailto:thomasisherwood@outlook.com" target="_blank">
-                    <img src="/envelope-solid.svg" alt="Email">
-                </a>
+                <a href="https://www.linkedin.com" target="_blank"><img src="/linkedin.svg" alt="LinkedIn" /></a>
+                <a href="https://www.github.com" target="_blank"><img src="/github.svg" alt="GitHub" /></a>
+                <a href="mailto:thomasisherwood@outlook.com" target="_blank"><img src="/envelope-solid.svg" alt="Email" /></a>
             </div>
-        </header>
 
-        <section class="introduction">
-            <div class="intro-bubble">
-                <h2>{t('Who I Am')}</h2>
-                <p>{t('I am a passionate game software engineer specializing in Games, Music, and Web development. I enjoy creating immersive experiences and innovative solutions.')}</p>
+            <div class="about-bubble">
+                <p>
+                    I am a developer studying Games Software Engineering at Bournemouth University.
+                    I have experience in web development and a passion for sound engineering as well.
+                </p>
+            </div>
+
+            <!-- Go to Projects Button -->
+            <a href="/projects" class="go-to-projects-btn">Go to Projects</a>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="skills-section">
+            <h2>Skills</h2>
+
+            <!-- Games Skills -->
+            <div class="skills-category">
+                <h3>Game Development</h3>
+                <div class="skills-icons">
+                    <div class="skill-item">
+                        <img src="/devIcons/Unreal.svg" alt="Unreal Engine" />
+                        <p>Unreal Engine - 1 project, 2 years experience</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/Unity.svg" alt="Unity" />
+                        <p>Unity - 2 projects, 3 years experience</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/Godot.svg" alt="Godot" />
+                        <p>Godot - 1 project, 1 year experience</p>
+                    </div>
+                    <!-- Add more game dev icons as needed -->
+                </div>
+            </div>
+
+            <!-- Web Skills -->
+            <div class="skills-category">
+                <h3>Web Development</h3>
+                <div class="skills-icons">
+                    <div class="skill-item">
+                        <img src="/devIcons/Astro.svg" alt="Astro" />
+                        <p>Astro</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/Svelte.svg" alt="Svelte" />
+                        <p>Svelte</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/TypeScript.svg" alt="TypeScript" />
+                        <p>TypeScript</p>
+                    </div>
+                    <div class="skill-item">
+                        <img src="/devIcons/JS.svg" alt="JavaScript" />
+                        <p>JavaScript</p>
+                    </div>
+                    <div class="skill-item">
+                        <div>
+                            <img src="/devIcons/HTML.svg" alt="HTML" />
+                            <img src="/devIcons/CSS.svg" alt="HTML" />
+                        </div>
+                        <p>HTML + CSS</p>
+                    </div>
+                    <!-- RAJOUTE ICI -->
+                </div>
             </div>
         </section>
 
-        <section class="about-me">
-            <div class="skills-sidebar">
-                <h2>Skills</h2>
-                <ul>
-                    <li>Skill 1</li>
-                    <li>Skill 2</li>
-                    <li>Skill 3</li>
-                    <li>Skill 4</li>
-                    <li>Skill 5</li>
-                    <li>Skill 6</li>
-                    <li>Skill 7</li>
-                </ul>
-            </div>
-            <div class="about-content">
-                <h2>{t('About Me')}</h2>
-                <p>{t('I am a passionate game software engineer with experience in creating immersive gaming experiences. Specializing in game development and design, I enjoy bringing virtual worlds to life.')}</p>
-            </div>
+        <!-- Contact Me Section -->
+        <section class="contact-section">
+            <h2>Contact Me</h2>
+            <p>Feel free to reach out to discuss projects, collaborations, or just to connect!</p>
+            <a href="mailto:thomasisherwood@outlook.com" class="contact-btn">Get in Touch</a>
         </section>
 
-        <section class="recent-posts">
-            <h2>Popular Posts</h2>
-            <ul>
-                {popularPosts.map(post => (
-                        <li key={post.id}>
-                            <a href={`/posts/${post.id}`}>{post.title}</a>
-                        </li>
-                ))}
-            </ul>
-        </section>
-
-        <section class="web-content">
-            <ul>
-                {web.map(w => (
-                        <li key={w.slug}>
-                            <w.Content />
-                        </li>
-                ))}
-            </ul>
-        </section>
     </main>
 </Layout>
 
 <style>
-    :root {
-        --background-color: #121212;
-        --text-color: #e0e0e0;
-        --accent-color: #bb86fc;
+    /* General Layout Styles */
+    .main-content {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #e4e4e7;
     }
 
-    body {
-        background-color: var(--background-color);
-        color: var(--text-color);
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    .main {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 2rem;
-        padding: 2rem;
-    }
-
-    .header {
-        grid-column: 1 / span 2;
+    /* About Me Section */
+    .about-section {
         text-align: center;
-        margin-bottom: 2rem;
-    }
-
-    .face-image {
-        width: 150px;
-        border: 2px solid var(--accent-color);
-        border-radius: 50%;
-        aspect-ratio: 1/1;
-        object-fit: cover;
-        margin-bottom: 1rem;
-    }
-
-    blockquote {
-        font-size: 1.5rem;
-        color: var(--accent-color);
-        margin: 0;
-        line-height: 1.5;
-        text-align: center;
-        margin-bottom: 1rem;
+        margin-bottom: 40px;
     }
 
     .navbar-icons {
         display: flex;
         justify-content: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
+        gap: 15px;
+        margin-bottom: 15px;
     }
 
-    .navbar-icons img {
-        width: 24px;
-        height: 24px;
-        filter: brightness(0) invert(1);
-        transition: filter 0.3s;
+    .navbar-icons a img {
+        width: 30px;
+        height: 30px;
     }
 
-    .navbar-icons img:hover {
-        filter: brightness(0) invert(0.7);
+    .profile-photo {
+        margin-top: 20px;
+    }
+    .face-image {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 20px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .introduction {
-        grid-column: 1 / span 2;
+    .about-bubble {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 600px;
+        font-size: 1.1rem;
+        line-height: 1.5;
     }
 
-    .intro-bubble {
-        background-color: var(--background-color);
-        border: 2px solid var(--accent-color);
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 2rem;
-        text-align: center;
-    }
-
-    .about-me {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 2rem;
-    }
-
-    .skills-sidebar {
-        background-color: var(--background-color);
-        border: 2px solid var(--accent-color);
-        border-radius: 10px;
-        padding: 1rem;
-    }
-
-    .skills-sidebar ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .skills-sidebar li {
-        margin-bottom: 0.5rem;
-    }
-
-    .about-content {
-        background-color: var(--background-color);
-        border: 2px solid var(--accent-color);
-        border-radius: 10px;
-        padding: 1rem;
-    }
-
-    .recent-posts, .web-content {
-        grid-column: 1 / span 2;
-    }
-
-    h2 {
-        color: var(--accent-color);
-        border-bottom: 2px solid var(--accent-color);
-        padding-bottom: 0.5rem;
-        margin: 1rem 0;
-    }
-
-    p {
-        line-height: 1.6;
-    }
-
-    a {
-        color: var(--accent-color);
+    .go-to-projects-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: rgba(136, 58, 234, 0.8);
+        color: #fff;
+        border-radius: 5px;
         text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
-    a:hover {
-        text-decoration: underline;
+    .go-to-projects-btn:hover {
+        background-color: rgba(136, 58, 234, 1);
+    }
+
+    /* Skills Section */
+    .skills-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .skills-category {
+        margin-bottom: 20px;
+    }
+
+    .skills-icons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .skill-item {
+        text-align: center;
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .skill-item img {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 5px;
+        transition: transform 0.2s;
+    }
+
+    .skill-item:hover img {
+        transform: scale(1.1);
+    }
+
+    /* Contact Me Section */
+    .contact-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .contact-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: rgba(136, 58, 234, 0.8);
+        color: #fff;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .contact-btn:hover {
+        background-color: rgba(136, 58, 234, 1);
     }
 
 </style>

@@ -9,7 +9,7 @@ const t = useTranslations(lang);
 const routes = [
     { title: t('Home'), path: `/${lang}` },
     { title: t('Projects'), path: `/${lang}/projects` },
-    { title: t('Activity'), path: `/${lang}/activity` },
+    { title: t('About'), path: `/${lang}/about` },
     { title: t('Resume'), path: `/${lang}/resume.pdf` }
 ];
 ---
@@ -25,7 +25,7 @@ const routes = [
         <li class={`nav-item ${Astro.url.pathname === `/${lang}/projects` ? 'active' : ''}`}>
             <a href={`/${lang}/projects`}>{t('Projects')}</a>
         </li>
-        <li class={`nav-item ${Astro.url.pathname === `/${lang}/activity` ? 'active' : ''}`}>
+        <li class={`nav-item ${Astro.url.pathname === `/${lang}/about` ? 'active' : ''}`}>
             <a href={`/${lang}/activity`}>{t('Activity')}</a>
         </li>
         <li class="nav-item">
