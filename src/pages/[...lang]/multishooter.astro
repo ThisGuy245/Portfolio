@@ -1,0 +1,208 @@
+---
+import Nav from '../../components/Nav.astro';
+import Layout from '../../layouts/Layout.astro';
+import { languages } from '../../i18n/ui';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+    return languages.map(lang => ({
+        params: { lang: lang.key },
+        props: { lang: lang.key }
+    }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t('BFX Game Jam 2024')}>
+    <Nav lang={lang} />
+    <main class="bfx-game-jam-page">
+        <!-- Header Section -->
+        <header class="project-header">
+            <h1>BFX Game Jam 2024</h1>
+            <p>Group leader of a team of 5. Using NetCode in Unity and nominee for Best Mechanics.</p>
+        </header>
+
+        <!-- Core Gameplay Section -->
+        <section class="core-gameplay">
+            <h2>Core Gameplay</h2>
+            <div class="content">
+                <p>
+                    A fast-paced multiplayer shooter where players compete to survive and eliminate opponents. The game features unique mechanics such as dynamic power-ups, environmental hazards, and a rotating map to keep the gameplay fresh and engaging.
+                </p>
+                <img src="/media/placeholder.png" alt="Core Gameplay" class="placeholder-image" />
+            </div>
+        </section>
+
+        <!-- Team Structure Section -->
+        <section class="team-structure">
+            <h2>Team Structure</h2>
+            <div class="team-grid">
+                <!-- Team Member Cards -->
+                <div class="team-card">
+                    <h3>Lewis Sharpe</h3>
+                    <p>Group Leader & Producer</p>
+                    <p>Responsible for project management, task delegation, and ensuring the team meets deadlines.</p>
+                </div>
+                <div class="team-card">
+                    <h3>Programmer 1</h3>
+                    <p>Networking & Gameplay</p>
+                    <p>Implemented NetCode for multiplayer functionality and core gameplay mechanics.</p>
+                </div>
+                <div class="team-card">
+                    <h3>Programmer 2</h3>
+                    <p>UI & Power-Ups</p>
+                    <p>Developed the user interface and dynamic power-up system.</p>
+                </div>
+                <div class="team-card">
+                    <h3>Designer 1</h3>
+                    <p>Level Design</p>
+                    <p>Created the rotating map and environmental hazards.</p>
+                </div>
+                <div class="team-card">
+                    <h3>Designer 2</h3>
+                    <p>Art & Animation</p>
+                    <p>Designed character models, animations, and visual effects.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Role Section -->
+        <section class="my-role">
+            <h2>My Role</h2>
+            <div class="content">
+                <p>
+                    As the group leader and producer, I was responsible for:
+                </p>
+                <ul>
+                    <li>Leading the team and ensuring effective communication.</li>
+                    <li>Managing tasks using <strong>Trello</strong> and <strong>Jira</strong>.</li>
+                    <li>Overseeing the integration of <strong>NetCode</strong> for multiplayer functionality.</li>
+                    <li>Debugging critical code and optimizing gameplay mechanics.</li>
+                    <li>Presenting the game to judges and showcasing its unique features.</li>
+                </ul>
+                <img src="/media/placeholder.png" alt="My Role" class="placeholder-image" />
+            </div>
+        </section>
+
+        <!-- Key Features Section -->
+        <section class="key-features">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <!-- Feature Cards -->
+                <div class="feature-card">
+                    <h3>Dynamic Power-Ups</h3>
+                    <p>Players can collect power-ups that temporarily enhance their abilities, such as increased speed or weapon damage.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Rotating Map</h3>
+                    <p>The map rotates periodically, forcing players to adapt to new environments and strategies.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Environmental Hazards</h3>
+                    <p>Traps and hazards are scattered throughout the map, adding an extra layer of challenge.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Multiplayer Mechanics</h3>
+                    <p>Built using Unity's NetCode, the game supports seamless multiplayer gameplay.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</Layout>
+
+<style>
+    /* General Styles */
+    .bfx-game-jam-page {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        color: #e4e4e7;
+    }
+
+    .project-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .project-header h1 {
+        font-size: 2.5rem;
+        color: #bb86fc;
+    }
+
+    .project-header p {
+        font-size: 1.1rem;
+        color: #a1a1aa;
+    }
+
+    /* Core Gameplay Section */
+    .core-gameplay, .my-role {
+        margin-bottom: 40px;
+    }
+
+    .core-gameplay .content, .my-role .content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .core-gameplay p, .my-role p {
+        flex: 2;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .placeholder-image {
+        flex: 1;
+        max-width: 300px;
+        border-radius: 12px;
+    }
+
+    /* Team Structure Section */
+    .team-structure {
+        margin-bottom: 40px;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .team-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .team-card h3 {
+        font-size: 1.25rem;
+        color: #bb86fc;
+        margin-bottom: 10px;
+    }
+
+    /* Key Features Section */
+    .key-features {
+        margin-bottom: 40px;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .feature-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .feature-card h3 {
+        font-size: 1.25rem;
+        color: #bb86fc;
+        margin-bottom: 10px;
+    }
+</style>
