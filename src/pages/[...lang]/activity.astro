@@ -1,16 +1,152 @@
 ---
 import Nav from '../../components/Nav.astro';
 import Layout from '../../layouts/Layout.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
+import ActivityCard from '../../components/ActivityCard.astro';
 import { languages } from '../../i18n/ui';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 export async function getStaticPaths() {
     return languages.map(lang => ({
-    params: { lang: lang.key },
-    props: { lang: lang.key }
+        params: { lang: lang.key },
+        props: { lang: lang.key }
     }));
+}
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+interface Activity {
+    title: string;
+    body: string;
+    date: string;
+    category: string;
+    placeholderImg?: string;
+    videoSrc?: string;
+    fullContent: string;
+}
+
+const activities: Activity[] = [
+    {
+        title: t('Nominee for Best Mechanics'),
+        body: t('Hosted a workshop on Unity game development for beginners at the local university.'),
+        date: '2024-05-15',
+        category: t('Workshop'),
+        placeholderImg: '/media/workshop.jpg',
+        fullContent: t('This full-day workshop covered the basics of Unity game development, including scene setup, scripting in C#, and basic game mechanics. Participants built a simple platformer game during the session.')
+    },
+    {
+        title: t('Conference Talk: Web Performance'),
+        body: t('Presented on modern web performance optimization techniques at DevConf 2024.'),
+        date: '2024-04-22',
+        category: t('Conference'),
+        videoSrc: '/media/conference-talk.mp4',
+        fullContent: t('My talk focused on performance optimization strategies for modern web applications, covering topics like lazy loading, code splitting, and efficient asset delivery. The presentation included live demos comparing different optimization approaches.')
+    },
+    {
+        title: t('Open Source Contribution'),
+        body: t('Contributed to an open-source graphics library with performance improvements.'),
+        date: '2024-03-10',
+        category: t('Open Source'),
+        placeholderImg: '/media/opensource.jpg',
+        fullContent: t('Worked on optimizing the rendering pipeline of a popular open-source graphics library. My contributions included implementing a more efficient batching system and reducing memory allocations during rendering operations.')
+    },
+    {
+        title: t('Mentorship Program'),
+        body: t('Participated as a mentor in a coding bootcamp for underrepresented groups in tech.'),
+        date: '2024-02-05',
+        category: t('Community'),
+        placeholderImg: '/media/mentorship.jpg',
+        fullContent: t('Served as a technical mentor for a 12-week coding bootcamp, helping students learn web development fundamentals. Provided code reviews, one-on-one support, and led weekly office hours to answer technical questions.')
+    }
+];
+
+// Categorizing activities by type
+function categorizeActivities(activities: Activity[]): Record<string, Activity[]> {
+    return activities.reduce((acc: Record<string, Activity[]>, activity: Activity) => {
+        const { category } = activity;
+        if (!acc[category]) {
+            acc[category] = [];
+        }
+        acc[category].push(activity);
+        return acc;
+    }, {});
+}
+
+// Filter functionality
+let selectedCategory: string = t('All');
+
+function filterActivities(category: string, activities: Activity[]): Activity[] {
+    selectedCategory = category;
+    if (category === t('All')) {
+        return activities;
+    } else {
+        return activities.filter(activity => activity.category === category);
+    }
+}
+
+let filteredActivities: Activity[] = filterActivities(selectedCategory, activities);
+---
+
+<Layout title={t('My Activities')}>
+    <Nav lang={lang} />
+    <main>
+        <!-- Activities Section -->
+        <section id="activities">
+            {Object.entries(categorizeActivities(filteredActivities)).map(([category, activities]) => (
+                    <div>
+                        <h3 class="category-header">{category}</h3>
+                        <ul class="activity-cards">
+                            {activities.map(activity => (
+                                    <li>
+                                        <ActivityCard activity={activity} />
+                                    </li>
+                            ))}
+                        </ul>
+                    </div>
+            ))}
+        </section>
+    </main>
+</Layout>
+
+<style>
+    /* Consistent with projects page styling */
+    .category-header {
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        color: var(--accent-color);
+        margin: 2rem 0;
+        position: relative;
     }
 
-    const lang = getLangFromUrl(Astro.url);
----
+    .category-header::after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 2px;
+        background-color: var(--accent-color);
+        margin: 0.5rem auto 0;
+    }
+
+    /* Activity Cards: Fixed sizes matching projects */
+    .activity-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 300px);
+        justify-content: center;
+        gap: 1.5rem;
+        list-style: none;
+        padding: 0;
+    }
+
+    @media (min-width: 768px) {
+        .activity-cards {
+            grid-template-columns: repeat(auto-fit, 300px);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .activity-cards {
+            grid-template-columns: repeat(auto-fit, 300px);
+        }
+    }
+</style>

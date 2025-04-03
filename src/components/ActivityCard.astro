@@ -1,0 +1,194 @@
+---
+export interface ActivityCardProps {
+    activity: {
+        title: string;
+        body: string;
+        date: string;
+        videoSrc?: string;
+        placeholderImg?: string;
+        fullContent: string;
+    };
+}
+
+const { title, body, date, videoSrc, placeholderImg, fullContent } = Astro.props.activity;
+---
+
+<div class="activity-card" onclick="showActivityModal(this)" data-full-content={fullContent} data-title={title}>
+    <div class="media-container">
+        {videoSrc ? (
+                <video
+                        src={videoSrc}
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        disablepictureinpicture
+                        class="activity-video"
+                >
+                    Your browser does not support the video tag.
+                </video>
+        ) : (
+                <img src={placeholderImg || '/media/activity-default.jpg'} alt={title} class="activity-image" />
+        )}
+    </div>
+
+    <div class="activity-info">
+        <h3>{title}</h3>
+        <p>{body}</p>
+        <div class="activity-date">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            <span>{new Date(date).toLocaleDateString()}</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    .activity-card {
+        background: rgba(var(--background-light), 0.8);
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        padding: 1rem;
+        color: #e4e4e7;
+        cursor: pointer;
+    }
+
+    .activity-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .media-container {
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #000;
+        aspect-ratio: 16/9;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .media-container video,
+    .media-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .activity-info h3 {
+        font-size: 1.5rem;
+        margin: 0 0 0.5rem;
+        color: #e4e4e7;
+    }
+
+    .activity-info p {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+        color: #b0b0b8;
+    }
+
+    .activity-date {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #b0b0b8;
+        font-size: 0.9rem;
+    }
+
+    .activity-date svg {
+        width: 16px;
+        height: 16px;
+    }
+</style>
+
+<script is:inline>
+    function showActivityModal(card) {
+        const title = card.getAttribute('data-title');
+        const content = card.getAttribute('data-full-content');
+
+        // Create modal backdrop
+        const backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop';
+        backdrop.style.position = 'fixed';
+        backdrop.style.top = '0';
+        backdrop.style.left = '0';
+        backdrop.style.width = '100%';
+        backdrop.style.height = '100%';
+        backdrop.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        backdrop.style.backdropFilter = 'blur(5px)';
+        backdrop.style.zIndex = '1000';
+        backdrop.style.display = 'flex';
+        backdrop.style.justifyContent = 'center';
+        backdrop.style.alignItems = 'center';
+        backdrop.style.padding = '2rem';
+
+        // Create modal content
+        const modal = document.createElement('div');
+        modal.className = 'activity-modal';
+        modal.style.backgroundColor = 'rgba(var(--background-light), 0.9)';
+        modal.style.borderRadius = '12px';
+        modal.style.padding = '2rem';
+        modal.style.maxWidth = '800px';
+        modal.style.width = '90%';
+        modal.style.maxHeight = '90vh';
+        modal.style.overflowY = 'auto';
+        modal.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.5)';
+        modal.style.position = 'relative';
+
+        // Add close button
+        const closeButton = document.createElement('button');
+        closeButton.innerHTML = '&times;';
+        closeButton.style.position = 'absolute';
+        closeButton.style.top = '1rem';
+        closeButton.style.right = '1rem';
+        closeButton.style.background = 'none';
+        closeButton.style.border = 'none';
+        closeButton.style.color = 'var(--text-color)';
+        closeButton.style.fontSize = '1.5rem';
+        closeButton.style.cursor = 'pointer';
+        closeButton.addEventListener('click', () => {
+            document.body.removeChild(backdrop);
+        });
+
+        // Add title
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = title;
+        titleElement.style.marginTop = '0';
+        titleElement.style.color = 'var(--accent)';
+
+        // Add content
+        const contentElement = document.createElement('div');
+        contentElement.innerHTML = content;
+        contentElement.style.marginTop = '1rem';
+        contentElement.style.lineHeight = '1.6';
+
+        // Assemble modal
+        modal.appendChild(closeButton);
+        modal.appendChild(titleElement);
+        modal.appendChild(contentElement);
+        backdrop.appendChild(modal);
+
+        // Add to document
+        document.body.appendChild(backdrop);
+
+        // Close when clicking on backdrop
+        backdrop.addEventListener('click', (e) => {
+            if (e.target === backdrop) {
+                document.body.removeChild(backdrop);
+            }
+        });
+    }
+</script>
