@@ -1,0 +1,280 @@
+---
+// Astro page with debugging
+import Nav from '../../components/Nav.astro';
+import { languages } from '../../i18n/ui';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import Layout from '../../layouts/Layout.astro';
+
+
+export async function getStaticPaths() {
+    return languages.map(lang => ({
+        params: { lang: lang.key },
+        props: { lang: lang.key }
+    }));
+}
+
+console.log("Nav:", Nav); // Debugging import
+console.log("Layout:", Layout); // Debugging import
+console.log("getLangFromUrl:", getLangFromUrl); // Debugging function
+console.log("useTranslations:", useTranslations); // Debugging function
+
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const web = await Astro.glob('../../content/web/*.mdx');
+---
+
+<Layout title={t('welcome')}>
+    <Nav lang={lang} />
+
+    <!-- Main content container -->
+    <main class="main-content">
+
+        <!-- About Me Section -->
+        <section class="about-section">
+            <!-- Left Side: Profile Photo and Contact Icons -->
+            <div class="profile-section">
+                <div class="profile-photo">
+                    <img src="/Face.jpg" alt={t('profileAlt')} class="face-image" />
+                </div>
+                <div class="navbar-icons">
+                    <a href="https://www.linkedin.com" target="_blank"><img src="/linkedin.svg" alt="LinkedIn" /></a>
+                    <a href="https://www.github.com" target="_blank"><img src="/github.svg" alt="GitHub" /></a>
+                    <a href="mailto:thomasisherwood@outlook.com" target="_blank"><img src="/envelope-solid.svg" alt="Email" /></a>
+                </div>
+            </div>
+
+            <!-- Right Side: Skills List -->
+            <div class="skills-section">
+                <h2>{t('skills')}</h2>
+                <div class="skills-list">
+                    <div class="skill-category">
+                        <h3>{t('mainLanguages')}</h3>
+                        <ul>
+                            <li>C++</li>
+                            <li>C#</li>
+                            <li>Python</li>
+                            <li>JavaScript</li>
+                            <li>TypeScript</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>{t('skillsAndTools')}</h3>
+                        <ul>
+                            <li>Unreal Engine</li>
+                            <li>Unity (Net Code)</li>
+                            <li>PyTorch + Keras</li>
+                            <li>OpenGL + SDL2</li>
+                            <li>Winsock for Windows</li>
+                        </ul>
+                    </div>
+                    <div class="skill-category">
+                        <h3>{t('webDevelopment')}</h3>
+                        <ul>
+                            <li>Astro</li>
+                            <li>Svelte</li>
+                            <li>HTML/CSS</li>
+                            <li>Node.js</li>
+                            <li>Dart/Flutter</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
+        <section class="featured-projects">
+            <h2>{t('featuredProjects')}</h2>
+
+            <!-- Game Studio Project -->
+            <div class="project-card">
+                <h3>{t('gameStudioProject')}</h3>
+                <p>
+                    {t('gameStudioDescription')}
+                </p>
+                <div class="project-details">
+                    <span class="project-category">{t('gamesProgramming')}</span>
+                    <span class="project-team-size">{t('teamSize')}: 8</span>
+                </div>
+                <a href={`/${lang}/projects`} class="project-link">{t('learnMore')}</a>
+            </div>
+
+            <!-- AI Game Engine Project -->
+            <div class="project-card">
+                <h3>{t('aiGameEngine')}</h3>
+                <p>
+                    {t('aiGameEngineDescription')}
+                </p>
+                <p>
+                    {t('aiGameEngineTools')}
+                </p>
+                <div class="project-details">
+                    <span class="project-category">{t('gamesProgramming')}</span>
+                    <span class="project-team-size">{t('teamSize')}: 1</span>
+                </div>
+                <a href={`/${lang}/projects`} class="project-link">{t('learnMore')}</a>
+            </div>
+        </section>
+
+        <!-- Contact Me Section -->
+        <section class="contact-section">
+            <h2>{t('contactMe')}</h2>
+            <p>{t('contactMessage')}</p>
+            <a href="mailto:thomasisherwood@outlook.com" class="contact-btn">{t('getInTouch')}</a>
+        </section>
+
+    </main>
+</Layout>
+
+<style>
+    /* General Layout Styles */
+    .main-content {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        color: #e4e4e7;
+    }
+
+    /* About Me Section */
+    .about-section {
+        display: flex;
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .profile-section {
+        flex: 1;
+        text-align: center;
+    }
+
+    .profile-photo {
+        margin-bottom: 20px;
+    }
+
+    .face-image {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .navbar-icons a img {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Skills Section */
+    .skills-section {
+        flex: 2;
+    }
+
+    .skills-section h2 {
+        font-size: 2rem;
+        color: #bb86fc;
+        margin-bottom: 20px;
+    }
+
+    .skills-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .skill-category h3 {
+        font-size: 1.25rem;
+        color: #bb86fc;
+        margin-bottom: 10px;
+    }
+
+    .skill-category ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .skill-category li {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+
+    /* Featured Projects Section */
+    .featured-projects {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .project-card {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 600px;
+        margin: 20px auto;
+        text-align: left;
+    }
+
+    .project-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .project-card p {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .project-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .project-category, .project-team-size {
+        font-size: 0.9rem;
+        color: #a1a1aa;
+    }
+
+    .project-link {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: rgba(136, 58, 234, 0.8);
+        color: #fff;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .project-link:hover {
+        background-color: rgba(136, 58, 234, 1);
+    }
+
+    /* Contact Me Section */
+    .contact-section {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .contact-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: rgba(136, 58, 234, 0.8);
+        color: #fff;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .contact-btn:hover {
+        background-color: rgba(136, 58, 234, 1);
+    }
+</style>

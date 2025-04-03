@@ -1,0 +1,150 @@
+---
+// Mes Imports pour localisation
+import { getLangFromUrl } from '../i18n/utils';
+import { useTranslations } from '../i18n/utils';
+import LanguagePicker from "./LanguagePicker.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Les routes pour la navigation
+/*
+const routes = [
+    { title: t('Home'), path: `/${lang}` },
+    { title: t('Projects'), path: `/${lang}/projects` },
+    { title: t('Activity'), path: `/${lang}/activity` },
+    { title: t('Resume'), path: `/${lang}/resume.pdf` }
+];*/
+---
+
+<nav class="navbar">
+    <div class="navbar-content">
+        <div class="navbar-brand">
+            <span>Thomas Isherwood</span>
+        </div>
+        <ul class="navbar-menu">
+            <li class={`nav-item ${Astro.url.pathname === `/${lang}/` ? 'active' : ''}`}>
+                <a href={`/${lang}/`}>{t('Home')}</a>
+            </li>
+            <li class={`nav-item ${Astro.url.pathname === `/${lang}/projects` ? 'active' : ''}`}>
+                <a href={`/${lang}/projects`}>{t('Projects')}</a>
+            </li>
+            <li class={`nav-item ${Astro.url.pathname === `/${lang}/activity` ? 'active' : ''}`}>
+                <a href={`/${lang}/building`}>{t('Activity')}</a> <!--TEMPORARY BUILDING!!!!!!!-->
+            </li>
+            <li class="nav-item">
+                <a href="javascript:void(0);" class="resume-btn" onclick="window.open('/cv.docx', '_blank').print();">{t('Resume')}</a>
+            </li>
+        </ul>
+        <LanguagePicker />
+    </div>
+</nav>
+
+<style>
+    :root {
+        --nav-background: rgba(4, 6, 24, 0.9);
+        --text-color: #e0e0e0;
+        --accent-color: #bb86fc;
+        --hover-color: rgba(187, 134, 252, 0.2);
+        --active-border: 2px solid var(--accent-color);
+    }
+
+    /* Main navbar container - full-width and fixed at top */
+    .navbar {
+        display: flex;
+        justify-content: center;
+        background-color: var(--nav-background);
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
+
+    /* Centered navbar content */
+    .navbar-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;             /* Control the overall width */
+        max-width: 1200px;      /* Set a max-width to prevent stretching on large screens */
+    }
+
+    .navbar-brand span {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    .navbar-menu {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-item {
+        margin: 0 1rem;
+    }
+
+    .nav-item a {
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-item.active a {
+        border-bottom: var(--active-border);
+    }
+
+    .nav-item a:hover,
+    .nav-item a:focus {
+        background-color: var(--hover-color);
+        color: var(--accent-color);
+    }
+
+    .resume-btn {
+        border: var(--active-border);
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        color: var(--text-color);
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .resume-btn:hover,
+    .resume-btn:focus {
+        background-color: var(--accent-color);
+        color: var(--nav-background);
+    }
+
+    .language-picker {
+        display: flex;
+        align-items: center;
+    }
+
+    .language-picker button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+    }
+
+    .language-picker img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .language-picker img:hover {
+        transform: scale(1.05);
+    }
+</style>

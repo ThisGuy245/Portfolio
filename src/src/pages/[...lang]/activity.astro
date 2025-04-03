@@ -1,0 +1,16 @@
+---
+import Nav from '../../components/Nav.astro';
+import Layout from '../../layouts/Layout.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { languages } from '../../i18n/ui';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+    return languages.map(lang => ({
+    params: { lang: lang.key },
+    props: { lang: lang.key }
+    }));
+    }
+
+    const lang = getLangFromUrl(Astro.url);
+---
