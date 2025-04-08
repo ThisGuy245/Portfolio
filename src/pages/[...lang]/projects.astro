@@ -32,7 +32,7 @@ const projects: Project[] = [
         title: t('Game Studio Project'),
         body: t('An 8-person project where I served as the overall producer. Team included 2 programmers, 4 designers, and 1 tech artist.'),
         href: `/${lang}/gamestudio`,
-        placeholderImg: '/media/GSP.png',
+        videoSrc: '/media/gsp.mp4',
         category: t('Games Programming'),
         teamSize: 8,
         technologies: ['c++', 'unreal', 'unity']
@@ -40,7 +40,7 @@ const projects: Project[] = [
     {
         title: t('BFX Fest Game Jam'),
         body: t('Made for BFX Game Jam 2024, Group leader of a team of 5. Using NetCode in Unity and Nominee for Best Mechanics.'),
-        href: `/${lang}/multishooter`,
+        href: `/${lang}/bfx`,
         videoSrc: '/media/bfx.mp4',
         category: t('Games Programming'),
         teamSize: 5,
@@ -49,8 +49,8 @@ const projects: Project[] = [
     {
         title: t('3D Graphics Programming'),
         body: t('A Doom-inspired level created using OpenGL and SDL2 with C++.'),
-        href: `/${lang}/building`,
-        videoSrc: '/media/doomlevel.mp4',
+        href: `/${lang}/projects`,
+        placeholderImg: '/media/Date.png',
         category: t('Games Programming'),
         teamSize: 1,
         technologies: ['c++', 'opengl', 'sdl2']
@@ -58,8 +58,8 @@ const projects: Project[] = [
     {
         title: t('Web Invaders Game'),
         body: t('A 2D Space-Invaders type to raise awareness in the Cyber space. Built and showcased on the web, CLICK VIEW TO PLAY'),
-        href: `/${lang}/building`,
-        placeholderImg: '/media/je3.mp4',
+        href: `/${lang}/projects`,
+        videoSrc: '/media/je3.mp4',
         category: t('Games Programming'),
         websiteUrl: "https://game.je3.com/",
         teamSize: 1,
@@ -68,7 +68,7 @@ const projects: Project[] = [
     {
         title: t('Guesthouse Site'),
         body: t('A website for a guesthouse in Brittany to showcase the area nearby, localisation implemented'),
-        href: `/${lang}/building`,
+        href: `/${lang}/projects`,
         placeholderImg: '/media/Domaine.jpg',
         category: t('Web Programming'),
         websiteUrl: "https://le-domaine.fr/en-GB/",
@@ -78,30 +78,32 @@ const projects: Project[] = [
     {
         title: t('Portfolio Website'),
         body: t('A personal website showcasing my work and projects. Built using astro.'),
-        href: `/${lang}/building`,
+        href: `/${lang}/projects`,
         placeholderImg: '/media/Portfolio.jpg',
         category: t('Web Programming'),
         websiteUrl: "https://thomasisherwood.com/en/",
         teamSize: 1,
         technologies: ['astro', 'svelte', 'typescript']
     },
+    /*
     {
-        title: t('Studio Project OST'),
+        title: t('studio Project OST'),
         body: t('Coming Soon tracks produced on Logic X Pro for an upcoming project.'),
         href: `/${lang}/building`,
         placeholderImg: '/path/to/music-placeholder.jpg',
         category: t('Sound Engineering'),
         technologies: ['logicpro']
-    },
+    },*/
     {
         title: t('AI Game Engine'),
         body: t('A concept for a game engine navigated through AI, built purely with C++.'),
         href: `/${lang}/aigameengine`,
-        placeholderImg: '/media/concept.png',
+        placeholderImg: '/media/Test.png',
         category: t('Games Programming'),
         teamSize: 1,
         technologies: ['c++', 'ai']
     },
+    /*
     {
         title: t('Mobile Map Application'),
         body: t('A mobile application for rating locations, built with Flutter and Dart, using Firebase for online storage.'),
@@ -110,7 +112,7 @@ const projects: Project[] = [
         category: t('Web Programming'),
         teamSize: 1,
         technologies: ['flutter', 'dart', 'firebase']
-    }
+    }*/
 ];
 
 // Categorizing projects by type (Games, Web, Music, etc.)

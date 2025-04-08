@@ -33,7 +33,7 @@ export const ui = {
 
         // Project Titles
         'Game Studio Project': 'Game Studio Project',
-        'Multiplayer Shooter': 'Multiplayer Shooter',
+        'BFX Fest Game Jam': 'BFX Fest Game Jam',
         '3D Graphics Programming': '3D Graphics Programming',
         'Web Invaders Game': 'Web Invaders Game',
         'Guesthouse Site': 'Guesthouse Site',
@@ -81,7 +81,7 @@ export const ui = {
         contactMessage: 'Feel free to reach out to discuss projects, collaborations, or just to connect!',
         getInTouch: 'Get in Touch',
 
-        // Game Studio Project
+        // Game studio Project
 
         'My Role as Producer': 'My Role as Producer',
         'As the producer, I am responsible for:': 'As the producer, I am responsible for:',
@@ -141,7 +141,39 @@ export const ui = {
             'The engine adapts to player behavior, providing a personalised user experience.',
         'Easily extensible with plugins, allowing developers to add new features and functionality.':
             'Easily extensible with plugins, allowing developers to add new features and functionality.',
+
+        // Activities Page
+        'My Activities': 'My Activities',
+        'Game Jam': 'Game Jam',
+        'Professional Experience': 'Professional Experience',
+        'Games Development': 'Games Development',
+        'Community': 'Community',
+
+        // BFX Festival Activity
+        'BFX Festival 2024 - Best Mechanics Nominee': 'BFX Festival 2024 - Best Mechanics Nominee',
+        'Led development of multiplayer game under 48-hour deadline': 'Led development of multiplayer game under 48-hour deadline',
+        'As team leader and producer for our BFX game jam entry, I spearheaded the technical direction and implemented all network programming using Unity Netcode. Managed a team of 5 developers, establishing Git workflows and coordinating our rapid development cycle. Designed the core multiplayer mechanics that earned us a nomination for Best Mechanics. Presented our project to judges and other teams, gaining valuable experience in team-based game development under extreme time pressure.':
+            'As team leader and producer for our BFX game jam entry, I spearheaded the technical direction and implemented all network programming using Unity Netcode. Managed a team of 5 developers, establishing Git workflows and coordinating our rapid development cycle. Designed the core multiplayer mechanics that earned us a nomination for Best Mechanics. Presented our project to judges and other teams, gaining valuable experience in team-based game development under extreme time pressure.',
+
+        // Studio Project Activity
+        'Studio Project - Elected Producer': 'Studio Project - Elected Producer',
+        'Pitched and led development of commercial-grade multiplayer game': 'Pitched and led development of commercial-grade multiplayer game',
+        'After presenting my vision for replayable multiplayer games with dark aesthetics, I was elected producer by my peers. Developed the technical roadmap for an 8-person student team creating a game designed to extend beyond academic requirements into commercial release. Established production pipelines, conducted code reviews, and mentored junior team members while implementing core gameplay systems.':
+            'After presenting my vision for replayable multiplayer games with dark aesthetics, I was elected producer by my peers. Developed the technical roadmap for an 8-person student team creating a game designed to extend beyond academic requirements into commercial release. Established production pipelines, conducted code reviews, and mentored junior team members while implementing core gameplay systems.',
+
+        // Denix Studio Activity
+        'Denix Studio - AI Engineer': 'Denix Studio - AI Engineer',
+        'Core programmer at indie studio developing commercial title': 'Core programmer at indie studio developing commercial title',
+        'Working part-time as AI engineer and core programmer at Denix Studio (13-person indie team), contributing to commercial game development. My role focuses on implementing robust AI systems while adhering to industry-standard practices. This first professional experience provides valuable insight into studio workflows, version control at scale, and the realities of shipping commercial products in a flexible but demanding indie environment.':
+            'Working part-time as AI engineer and core programmer at Denix Studio (13-person indie team), contributing to commercial game development. My role focuses on implementing robust AI systems while adhering to industry-standard practices. This first professional experience provides valuable insight into studio workflows, version control at scale, and the realities of shipping commercial products in a flexible but demanding indie environment.',
+
+        // Mentor Activity
+        'Technical Mentor - Coding Bootcamp': 'Technical Mentor - Coding Bootcamp',
+        'Volunteered as mentor for underrepresented groups in tech': 'Volunteered as mentor for underrepresented groups in tech',
+        'Dedicated 12 weeks to mentoring aspiring developers from underrepresented backgrounds. Conducted code reviews, led debugging sessions, and taught fundamental programming concepts. Created specialized materials for game development track students, focusing on Unity workflows and multiplayer concepts drawn from my professional and academic experiences.':
+            'Dedicated 12 weeks to mentoring aspiring developers from underrepresented backgrounds. Conducted code reviews, led debugging sessions, and taught fundamental programming concepts. Created specialized materials for game development track students, focusing on Unity workflows and multiplayer concepts drawn from my professional and academic experiences.'
     },
+
     fr: {
         // Navigation
         Home: 'Accueil',
@@ -168,13 +200,13 @@ export const ui = {
             'Je suis un ingénieur logiciel de jeux passionné avec de l\'expérience dans la création d\'expériences de jeu immersives. Spécialisé dans le développement et la conception de jeux, j\'aime donner vie à des mondes virtuels.',
 
         // Project Titles
-        'Game Studio Project': 'Projet de Studio de Jeux',
-        'Multiplayer Shooter': 'Jeu de Tir Multijoueur',
+        'Game Studio Project': 'Projet de studio de Jeux',
+        'BFX Fest Game Jam': 'BFX Fest Game Jam',
         '3D Graphics Programming': 'Programmation Graphique 3D',
         'Web Invaders Game': 'Jeu Web Invaders',
         'Guesthouse Site': 'Site de la Maison d\'Hôtes',
         'Portfolio Website': 'Site Web Portfolio',
-        'Studio Project OST': 'OST du Projet Studio',
+        'Studio Project OST': 'OST du Projet studio',
         'AI Game Engine': 'Moteur de Jeu IA',
         'Mobile Map Application': 'Application Mobile de Carte',
 
@@ -205,7 +237,7 @@ export const ui = {
         skillsAndTools: 'Compétences et Outils',
         webDevelopment: 'Développement Web',
         featuredProjects: 'Projets en Vedette',
-        gameStudioProject: 'Projet de Studio de Jeux',
+        gameStudioProject: 'Projet de studio de Jeux',
         gameStudioDescription: 'Un projet de 8 personnes où j\'ai été le producteur général. L\'équipe comprenait 2 programmeurs, 4 designers et 1 artiste technique.',
         aiGameEngine: 'Moteur de Jeu IA',
         aiGameEngineDescription: 'Un concept de moteur de jeu navigué par IA, construit entièrement en C++.',
@@ -245,7 +277,7 @@ export const ui = {
         'Easily extensible with plugins, allowing developers to add new features and functionality.':
             'Facilement extensible avec des plugins, permettant aux développeurs d\'ajouter de nouvelles fonctionnalités.',
 
-        // Game Studio Project Page
+        // Game studio Project Page
         'My Role as Producer': 'Mon Rôle en tant que Producteur',
         'As the producer, I am responsible for:': 'En tant que producteur, je suis responsable de :',
         'Project management and task delegation using Trello and Notion.':
@@ -276,6 +308,37 @@ export const ui = {
         'Environment': 'Environnement',
         'The game features two main environments: the Casino Lobby and the Industrial Dungeon. The dungeon is a dark, abandoned industrial space with procedurally generated rooms and corridors.':
             'Le jeu propose deux environnements principaux : le hall du casino et le donjon industriel. Le donjon est un espace industriel sombre et abandonné avec des salles et des couloirs générés de manière procédurale.',
-    },
 
+
+        // Activities Page
+        'My Activities': 'Mes Activités',
+        'Game Jam': 'Game Jam',
+        'Professional Experience': 'Expérience Professionnelle',
+        'Games Development': 'Development de Jeux',
+        'Community': 'Communauté',
+
+        // BFX Festival Activity
+        'BFX Festival 2024 - Best Mechanics Nominee': 'BFX Festival 2024 - Nommé pour les Meilleures Mécaniques',
+        'Led development of multiplayer game under 48-hour deadline': 'Dirigé le développement d\'un jeu multijoueur sous un délai de 48 heures',
+        'As team leader and producer for our BFX game jam entry, I spearheaded the technical direction and implemented all network programming using Unity Netcode. Managed a team of 5 developers, establishing Git workflows and coordinating our rapid development cycle. Designed the core multiplayer mechanics that earned us a nomination for Best Mechanics. Presented our project to judges and other teams, gaining valuable experience in team-based game development under extreme time pressure.':
+            'En tant que chef d\'équipe et producteur de notre participation à la BFX game jam, j\'ai dirigé l\'orientation technique et implémenté toute la programmation réseau en utilisant Unity Netcode. J\'ai managé une équipe de 5 développeurs, mis en place des workflows Git et coordonné notre cycle de développement rapide. Conçu les mécaniques multijoueurs principales qui nous ont valu une nomination pour les Meilleures Mécaniques. Présenté notre projet aux juges et autres équipes, acquérant une expérience précieuse en développement de jeu en équipe sous pression temporelle extrême.',
+
+        // Studio Project Activity
+        'Studio Project - Elected Producer': 'Projet Studio - Producteur Élu',
+        'Pitched and led development of commercial-grade multiplayer game': 'Proposé et dirigé le développement d\'un jeu multijoueur de qualité commerciale',
+        'After presenting my vision for replayable multiplayer games with dark aesthetics, I was elected producer by my peers. Developed the technical roadmap for an 8-person student team creating a game designed to extend beyond academic requirements into commercial release. Established production pipelines, conducted code reviews, and mentored junior team members while implementing core gameplay systems.':
+            'Après avoir présenté ma vision de jeux multijoueurs rejouables avec une esthétique sombre, j\'ai été élu producteur par mes pairs. Développé la feuille de route technique pour une équipe étudiante de 8 personnes créant un jeu conçu pour dépasser les exigences académiques et atteindre une sortie commerciale. Établi des pipelines de production, effectué des revues de code et encadré les membres juniors de l\'équipe tout en implémentant les systèmes de gameplay principaux.',
+
+        // Denix Studio Activity
+        'Denix Studio - AI Engineer': 'Denix Studio - Ingénieur IA',
+        'Core programmer at indie studio developing commercial title': 'Programmeur principal dans un studio indie développant un titre commercial',
+        'Working part-time as AI engineer and core programmer at Denix Studio (13-person indie team), contributing to commercial game development. My role focuses on implementing robust AI systems while adhering to industry-standard practices. This first professional experience provides valuable insight into studio workflows, version control at scale, and the realities of shipping commercial products in a flexible but demanding indie environment.':
+            'Travaillant à temps partiel en tant qu\'ingénieur IA et programmeur principal chez Denix Studio (équipe indie de 13 personnes), contribuant au développement de jeux commerciaux. Mon rôle se concentre sur l\'implémentation de systèmes IA robustes tout en respectant les pratiques standards de l\'industrie. Cette première expérience professionnelle offre un aperçu précieux des workflows studio, du contrôle de version à grande échelle et des réalités de la livraison de produits commerciaux dans un environnement indie flexible mais exigeant.',
+
+        // Mentor Activity
+        'Technical Mentor - Coding Bootcamp': 'Mentor Technique - Bootcamp de Codage',
+        'Volunteered as mentor for underrepresented groups in tech': 'Bénévole en tant que mentor pour des groupes sous-représentés dans la tech',
+        'Dedicated 12 weeks to mentoring aspiring developers from underrepresented backgrounds. Conducted code reviews, led debugging sessions, and taught fundamental programming concepts. Created specialized materials for game development track students, focusing on Unity workflows and multiplayer concepts drawn from my professional and academic experiences.':
+            'Consacré 12 semaines à encadrer des développeurs en herbe issus de milieux sous-représentés. Effectué des revues de code, dirigé des sessions de débogage et enseigné les concepts de programmation fondamentaux. Créé du matériel spécialisé pour les étudiants en développement de jeux, en mettant l\'accent sur les workflows Unity et les concepts multijoueurs tirés de mes expériences professionnelles et académiques.'
+    }
 } as const;
