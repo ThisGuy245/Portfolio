@@ -46,3 +46,24 @@
     margin-top: 1rem;
     line-height: 1.6;
 }
+
+.flicker {
+    animation: flickerText 2s infinite;
+}
+
+@keyframes flickerText {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        opacity: 0;
+    }
+}
+.neon-text {
+    color: #fff;
+    text-shadow:
+            0 0 5px #6600ff,
+            0 0 10px #aa00ff,
+            0 0 20px #8c00ff,
+            0 0 40px #6600ff;
+}

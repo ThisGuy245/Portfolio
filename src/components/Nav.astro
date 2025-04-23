@@ -13,7 +13,7 @@ const routes = [
     { title: t('Home'), path: `/${lang}` },
     { title: t('Projects'), path: `/${lang}/projects` },
     { title: t('Activity'), path: `/${lang}/activity` },
-    { title: t('Resume'), path: `/${lang}/resume.pdf` }
+    { title: t('CV'), path: `/${lang}/cv` }
 ];*/
 ---
 
@@ -22,23 +22,37 @@ const routes = [
         <div class="navbar-brand">
             <span>Thomas Isherwood</span>
         </div>
-        <ul class="navbar-menu">
+
+        <!-- Hamburger Icon -->
+        <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+            ☰
+        </button>
+
+        <!-- Menu Links -->
+        <ul class="navbar-menu" id="nav-menu">
             <li class={`nav-item ${Astro.url.pathname === `/${lang}/` ? 'active' : ''}`}>
-                <a href={`/${lang}/`}>{t('Home')}</a>
+                <a href={`/${lang}/`} class="neon-text">{t('Home')}</a>
             </li>
             <li class={`nav-item ${Astro.url.pathname === `/${lang}/projects` ? 'active' : ''}`}>
-                <a href={`/${lang}/projects`}>{t('Projects')}</a>
+                <a href={`/${lang}/projects`} class="neon-text">{t('Projects')}</a>
             </li>
             <li class={`nav-item ${Astro.url.pathname === `/${lang}/activity` ? 'active' : ''}`}>
-                <a href={`/${lang}/activity`}>{t('Activity')}</a> <!--TEMPORARY BUILDING!!!!!!!-->
+                <a href={`/${lang}/activity`} class="neon-text">{t('Activity')}</a>
             </li>
+            <li class={`nav-item ${Astro.url.pathname === `/${lang}/cv` ? 'active' : ''}`}>
+                <a href={`/${lang}/cv`} class="neon-text">CV</a>
+            </li>
+            <!--
             <li class="nav-item">
-                <a href="/ThomasResume.pdf" class="resume-btn" target="_blank" rel="noopener noreferrer">{t('Resume')}</a>
-            </li>
+                <a href="/ThomasResume.pdf" class="resume-btn, neon-text" target="_blank" rel="noopener noreferrer">{t('Resume')}</a>
+            </li>-->
         </ul>
+
         <LanguagePicker />
     </div>
 </nav>
+
+
 
 <style>
     :root {
@@ -70,6 +84,7 @@ const routes = [
         width: 90%;             /* Control the overall width */
         max-width: 1200px;      /* Set a max-width to prevent stretching on large screens */
     }
+
 
     .navbar-brand span {
         font-size: 2rem;
@@ -147,4 +162,82 @@ const routes = [
     .language-picker img:hover {
         transform: scale(1.05);
     }
+
+    /* Hamburger button (hidden on desktop) */
+    .hamburger {
+        display: none;
+        font-size: 2rem;
+        background: none;
+        border: none;
+        color: var(--text-color);
+        cursor: pointer;
+    }
+         /* Improved Mobile Styles */
+    @media (max-width: 768px) {
+        .hamburger {
+            display: block;
+            padding: 1rem; /* More tap area */
+            z-index: 1001; /* Above the menu */
+        }
+
+        .navbar-menu {
+            position: fixed;
+            top: 0;
+            right: -100%; /* Start off-screen */
+            width: 70%; /* Takes up 70% of screen */
+            height: 100vh;
+            margin-top: 0;
+            background-color: var(--nav-background);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Align items to left */
+            padding: 5rem 2rem 2rem; /* Space for close button */
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease-out;
+            z-index: 1000;
+            opacity: 1 !important; /* Force solid background */
+        }
+
+        .navbar-menu.open {
+            right: 0;
+        }
+
+        .nav-item {
+            width: 100%;
+            margin: 0.75rem 0; /* More vertical spacing */
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 0.75rem 1rem; /* Larger tap targets */
+            width: 100%;
+        }
+
+        .resume-btn {
+            margin-top: 1rem;
+            text-align: center;
+            width: 100%;
+        }
+
+
+
+    }
 </style>
+
+<script>
+    const button = document.querySelector('.hamburger');
+    const menu = document.getElementById('nav-menu');
+
+    if (button && menu) {
+        // Toggle menu
+        const toggleMenu = () => {
+            menu.classList.toggle('open');
+            document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+        };
+
+        button.addEventListener('click', toggleMenu);
+
+    }
+</script>

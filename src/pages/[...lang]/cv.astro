@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import {languages} from "../../i18n/ui";
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+export async function getStaticPaths() {
+    return languages.map(lang => ({
+        params: { lang: lang.key },
+        props: { lang: lang.key }
+    }));
+}
+
+
+---
+
+
+<Layout title={t('resumePageTitle')}>
+    <Nav lang={lang} />
+
+    <main class="cv-page">
+        <h1 class="cv-heading">{t('resume')}</h1>
+
+        <div class="cv-columns">
+            <!-- English CVs -->
+            <div class="cv-column">
+                <h2>English</h2>
+                <a
+                        href="/Thomas_CV_En.pdf"
+                        class="cv-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                >
+                    <img src="/download-solid.svg" alt="Download" class="cv-icon" />
+                    Gameplay Programmer CV
+                </a>
+            </div>
+
+            <!-- French CVs -->
+            <div class="cv-column">
+                <h2>Français</h2>
+                <a
+                        href="/Thomas_CV_Fr.pdf"
+                        class="cv-button"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                >
+                    <img src="/download-solid.svg" alt="Télécharger" class="cv-icon" />
+                    CV Développeur Gameplay
+                </a>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    .cv-page {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        text-align: center;
+        color: #e4e4e7;
+    }
+
+    .cv-heading {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: #bb86fc;
+    }
+
+    .cv-columns {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .cv-column {
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .cv-column h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #ffffff;
+    }
+
+    .cv-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 24px;
+        font-weight: bold;
+        font-size: 1rem;
+        background-color: rgba(136, 58, 234, 0.8);
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .cv-button:hover {
+        background-color: rgba(136, 58, 234, 1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .cv-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    @media (min-width: 768px) {
+        .cv-columns {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .cv-column {
+            flex: 1;
+            margin: 0 10px;
+        }
+    }
+</style>
