@@ -1,8 +1,34 @@
 <script>
     export let skills = {
         "Main Languages": ["C++", "C#", "Python", "JavaScript", "TypeScript"],
-        "Skills & Tools": ["Unreal Engine", "Unity (Net Code)", "PyTorch + Keras", "OpenGL + SDL2", "Winsock for Windows"],
-        "Web Development": ["Astro", "Svelte", "HTML/CSS", "Node.js", "Dart/Flutter"]
+        "Skills & Tools": ["Unreal Engine", "Unity", "PyTorch", "OpenGL", "SDL2", "Winsock"],
+        "Web Development": ["Astro", "Svelte", "HTML", "CSS", "Node.js", "Flutter"]
+    };
+
+    // Normalize names for devicon use
+    const iconMap = {
+        "C++": "cplusplus",
+        "C#": "csharp",
+        "HTML": "html5",
+        "CSS": "css3",
+        "JavaScript": "javascript",
+        "TypeScript": "typescript",
+        "Python": "python",
+        "Node.js": "nodejs",
+        "Svelte": "svelte",
+        "Astro": "astro",
+        "Flutter": "dart",
+        "Unity": "unity",
+        "Unreal Engine": "unrealengine",
+        "OpenGL": "opengl",
+        "SDL2": "sdl",
+        "PyTorch": "pytorch",
+        "Winsock": "windows8" // fallback Windows icon
+    };
+
+    const getDeviconClass = (name) => {
+        const iconName = iconMap[name];
+        return iconName ? `devicon-${iconName}-plain colored` : "";
     };
 </script>
 
@@ -14,7 +40,12 @@
                 <h3>{category}</h3>
                 <ul>
                     {#each items as item}
-                        <li>{item}</li>
+                        <li>
+                            {#if getDeviconClass(item)}
+                                <i class={getDeviconClass(item)} title={item}></i>
+                            {/if}
+                            <span>{item}</span>
+                        </li>
                     {/each}
                 </ul>
             </div>
@@ -23,8 +54,10 @@
 </section>
 
 <style>
+    @import url('https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css');
+
     .skills-section {
-        flex: 2;
+        padding: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -32,38 +65,36 @@
     }
 
     .skills-section h2 {
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: #bb86fc;
-        margin-bottom: 20px;
+        margin-bottom: 2rem;
     }
 
     .skills-list {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 20px;
-        max-width: 500px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
         width: 100%;
     }
 
-    .skill-category {
-        text-align: center;
-    }
-
     .skill-category h3 {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
         color: #bb86fc;
-        margin-bottom: 10px;
+        margin-bottom: 1rem;
     }
 
     .skill-category ul {
-        list-style-type: none;
+        list-style: none;
         padding: 0;
-        margin: 0;
     }
 
     .skill-category li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
         font-size: 1rem;
-        margin-bottom: 5px;
+        margin-bottom: 0.5rem;
+        color: #e0e0e0;
         transition: color 0.3s ease;
     }
 
@@ -71,19 +102,22 @@
         color: #bb86fc;
     }
 
-    @media (min-width: 768px) {
-        .skills-list {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            max-width: none;
+    i[class^="devicon-"] {
+        font-size: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .skills-section {
+            text-align: center;
+            align-items: center;
         }
 
         .skill-category {
-            text-align: left;
+            text-align: center;
         }
 
-        .skills-section {
-            align-items: flex-start;
-            text-align: left;
+        .skill-category li {
+            justify-content: center;
         }
     }
 </style>

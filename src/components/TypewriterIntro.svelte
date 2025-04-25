@@ -1,43 +1,81 @@
-<script>
+<script lang="ts">
     import { onMount } from 'svelte';
+    import { getLangFromUrl, useTranslations } from '../i18n/utils';
+    import type { Translation } from '../util/types';
 
-    const phrases = [
-        "I am fine-tuning a LLM.",
-        "I am building a game engine.",
-        "I craft websites from scratch.",
-    ];
-
+    let lang: keyof typeof ui = 'en'; // Initialize with default language
+    let t: (key: string) => string;
     let displayText = '';
-    let currentPhrase = 0;
+    let currentPhraseIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
+    let phrases: string[] = [];
+
+    // Typewriter configuration
+    const typingSpeed = 60;
+    const deletingSpeed = 30;
+    const pauseBetweenPhrases = 5000;
 
     function type() {
-        const fullText = phrases[currentPhrase];
+        const currentPhrase = phrases[currentPhraseIndex];
+
         if (isDeleting) {
-            displayText = fullText.substring(0, charIndex--);
+            displayText = currentPhrase.substring(0, charIndex - 1);
+            charIndex--;
         } else {
-            displayText = fullText.substring(0, charIndex++);
+            displayText = currentPhrase.substring(0, charIndex + 1);
+            charIndex++;
         }
 
-        if (!isDeleting && charIndex === fullText.length) {
+        let timeout = typingSpeed;
+
+        if (!isDeleting && charIndex === currentPhrase.length) {
+            timeout = pauseBetweenPhrases;
             isDeleting = true;
-            setTimeout(type, 1500);
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
-            currentPhrase = (currentPhrase + 1) % phrases.length;
-            setTimeout(type, 300);
-        } else {
-            setTimeout(type, isDeleting ? 30 : 60);
+            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+            timeout = 300;
+        } else if (isDeleting) {
+            timeout = deletingSpeed;
         }
+
+        setTimeout(type, timeout);
     }
 
     onMount(() => {
-        type();
+        try {
+            // Safely get language from URL
+            const url = new URL(window.location.href);
+            lang = getLangFromUrl(url);
+            t = useTranslations(lang);
+
+            // Initialize translated phrases
+            phrases = [
+                t("I am fine-tuning a LLM."),
+                t("I am building a game engine."),
+                t("I craft websites from scratch.")
+            ];
+
+            // Start typewriter effect
+            type();
+        } catch (error) {
+            console.error('Error initializing typewriter:', error);
+            // Fallback to default phrases if translation fails
+            phrases = [
+                "I am fine-tuning a LLM.",
+                "I am building a game engine.",
+                "I craft websites from scratch."
+            ];
+            type();
+        }
     });
 </script>
 
-<h1 class="typewriter">Hi, I'm Thomas. <span>{displayText}</span><span class="cursor">|</span></h1>
+<h1 class="typewriter">
+    {t ? t("intro.greeting") : "Hi, I'm Thomas."} <span>{displayText}</span><span class="cursor">|</span>
+</h1>
+
 
 <style>
     .typewriter {

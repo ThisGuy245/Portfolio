@@ -38,14 +38,14 @@ const { title, body, href, videoSrc, placeholderImg, icons, teamSize, websiteUrl
         <h3><a href={href}>{title}</a></h3>
         <p>{body}</p>
 
-        <!-- Go to Site Button (Conditional) -->
+        <!-- Go to Site Button (Conditional)
         {websiteUrl && (
                 <div class="website-link-container">
                     <a href={websiteUrl} class="website-link" target="_blank" rel="noopener noreferrer">
                         Go to Site
                     </a>
                 </div>
-        )}
+        )}-->
 
         <!-- Technologies Section -->
         {icons && icons.length > 0 && (
@@ -137,7 +137,7 @@ const { title, body, href, videoSrc, placeholderImg, icons, teamSize, websiteUrl
         margin: 1rem 0;
         text-align: center;
     }
-
+    /*
     .website-link {
         display: inline-block;
         padding: 0.5rem 1rem;
@@ -154,6 +154,7 @@ const { title, body, href, videoSrc, placeholderImg, icons, teamSize, websiteUrl
         border-color: rgba(var(--accent), 1);
         color: rgba(var(--accent), 1);
     }
+*/
 
     /* Technologies Section */
     .icon-container {

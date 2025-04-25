@@ -21,8 +21,8 @@ export const ui = {
         Games: 'Games',
         Web: 'Web',
         Music: 'Music',
-        'Games Programming': 'Games Programming',
-        'Web Programming': 'Web Programming',
+        'Games Programming': 'Games Development',
+        'Web Programming': 'Web Development',
         'Sound Engineering': 'Sound Engineering',
 
         // Portfolio Page
@@ -34,7 +34,7 @@ export const ui = {
         // Project Titles
         'Game Studio Project': 'Game Studio Project',
         'BFX Fest Game Jam': 'BFX Fest Game Jam',
-        '3D Graphics Programming': '3D Graphics Programming',
+        'Physics/Render Engine': 'Physics/Render Engine',
         'Web Invaders Game': 'Web Invaders Game',
         'Guesthouse Site': 'Guesthouse Site',
         'Portfolio Website': 'Portfolio Website',
@@ -43,22 +43,22 @@ export const ui = {
         'Mobile Map Application': 'Mobile Map Application',
 
         // Project Descriptions
-        'An 8-person project where I served as the overall producer. Team included 2 programmers, 4 designers, and 1 tech artist.':
+        'GSPdesc':
             'An 8-person project where I served as the overall producer. Team included 2 programmers, 4 designers, and 1 tech artist.',
-        'Made for BFX Game Jam 2024, Group leader of a team of 5. Using NetCode in Unity and Nominee for Best Mechanics.':
+        'BFXdesc':
             'Made for BFX Game Jam 2024, Group leader of a team of 5. Using NetCode in Unity and Nominee for Best Mechanics.',
-        'A Doom-inspired level created using OpenGL and SDL2 with C++.': 'A Doom-inspired level created using OpenGL and SDL2 with C++.',
-        'A 2D Space-Invaders type to raise awareness in the Cyber space. Built and showcased on the web, CLICK VIEW TO PLAY':
-            'A 2D Space-Invaders type to raise awareness in the Cyber space. Built and showcased on the web, CLICK VIEW TO PLAY',
-        'A website for a guesthouse in Brittany to showcase the area nearby, localisation implemented':
+        '3GPdesc':'A Physics & Rendering engine. Featuring a doom-inspired level created using OpenGL and SDL2 with C++.',
+        'JE3desc':
+            'A 2D Space-Invaders type to raise awareness in the Cyber space. Built and showcased on the web with future support coming soon',
+        'BZHdesc':
             'A website for a guesthouse in Brittany to showcase the area nearby, localisation implemented',
-        'A personal website showcasing my work and projects. Built using astro.':
-            'A personal website showcasing my work and projects. Built using astro.',
-        'Coming Soon tracks produced on Logic X Pro for an upcoming project.':
+        'Portdesc':
+            'A personal website showcasing my work and projects. Built using astro, svelte and i18n.',
+        'Logicdesc':
             'Coming Soon tracks produced on Logic X Pro for an upcoming project.',
-        'A concept for a game engine navigated through AI, built purely with C++.':
-            'A concept for a game engine navigated through AI, built purely with C++.',
-        'A mobile application for rating locations, built with Flutter and Dart, using Firebase for online storage.':
+        'Enginedesc':
+            'A concept for a game engine navigated through AI, built with C++, my own physics engine and Mistral LLM. ',
+        'Mobiledesc':
             'A mobile application for rating locations, built with Flutter and Dart, using Firebase for online storage.',
 
         // Index Page
@@ -70,7 +70,7 @@ export const ui = {
         webDevelopment: 'Web Development',
         featuredProjects: 'Featured Projects',
         gameStudioProject: 'Game Studio Project',
-        gameStudioDescription: 'An 8-person project where I served as the overall producer. Team included 2 programmers, 4 designers, and 1 tech artist.',
+        gameStudioDescription: 'An 8-person project where I serve as the overall producer. Team included 2 programmers, 4 designers, and 1 tech artist.',
         aiGameEngine: 'AI Game Engine',
         aiGameEngineDescription: 'A concept for a game engine navigated through AI, built purely with C++.',
         aiGameEngineTools: 'Using OpenGL, SDL2, Winsock & PyTorch.',
@@ -80,6 +80,13 @@ export const ui = {
         contactMe: 'Contact Me',
         contactMessage: 'Feel free to reach out to discuss projects, collaborations, or just to connect!',
         getInTouch: 'Get in Touch',
+
+        // TypeWriter script
+        'I am fine-tuning a LLM.': 'I am fine-tuning a LLM.',
+        'I am building a game engine.':'I am building a game engine.',
+        'I craft websites from scratch.':'I craft websites from scratch.',
+        "intro.greeting": "Hi, I'm Thomas.",
+
 
         // Game studio Project
 
@@ -189,8 +196,8 @@ export const ui = {
         Games: 'Jeux',
         Web: 'Web',
         Music: 'Musique',
-        'Games Programming': 'Programmation de Jeux',
-        'Web Programming': 'Programmation Web',
+        'Games Programming': 'Développement de Jeux',
+        'Web Programming': 'Développement Web',
         'Sound Engineering': 'Ingénierie Sonore',
 
         // Portfolio Page
@@ -200,33 +207,33 @@ export const ui = {
             'Je suis un ingénieur logiciel de jeux passionné avec de l\'expérience dans la création d\'expériences de jeu immersives. Spécialisé dans le développement et la conception de jeux, j\'aime donner vie à des mondes virtuels.',
 
         // Project Titles
-        'Game Studio Project': 'Projet de studio de Jeux',
+        'Game Studio Project': 'Projet: Studio de Jeux',
         'BFX Fest Game Jam': 'BFX Fest Game Jam',
-        '3D Graphics Programming': 'Programmation Graphique 3D',
+        'Physics/Render Engine': 'Physique et Rendu',
         'Web Invaders Game': 'Jeu Web Invaders',
-        'Guesthouse Site': 'Site de la Maison d\'Hôtes',
+        'Guesthouse Site': 'Maison d\'Hôtes Hirel',
         'Portfolio Website': 'Site Web Portfolio',
         'Studio Project OST': 'OST du Projet studio',
         'AI Game Engine': 'Moteur de Jeu IA',
         'Mobile Map Application': 'Application Mobile de Carte',
 
         // Project Descriptions
-        'An 8-person project where I served as the overall producer. Team included 2 programmers, 4 designers, and 1 tech artist.':
+        'GSPdesc':
             'Un projet de 8 personnes où j\'ai été le producteur général. L\'équipe comprenait 2 programmeurs, 4 designers et 1 artiste technique.',
-        'Made for BFX Game Jam 2024, Group leader of a team of 5. Using NetCode in Unity and Nominee for Best Mechanics.':
-            'Réalisé pour la BFX Game Jam 2024, chef de groupe d\'une équipe de 5. Utilisation de NetCode dans Unity et nominé pour les meilleures mécaniques.',
-        'A Doom-inspired level created using OpenGL and SDL2 with C++.': 'Un niveau inspiré de Doom créé avec OpenGL et SDL2 en C++.',
-        'A 2D Space-Invaders type to raise awareness in the Cyber space. Built and showcased on the web, CLICK VIEW TO PLAY':
+        'BFXdesc':
+            'Créé pour le BFX Game Jam 2024, chef d’équipe d’un groupe de 5. Utilisation de NetCode dans Unity et nommé pour la meilleure mécanique.',
+        '3GPdesc': 'Un moteur de physique et de rendu. Avec un niveau inspiré de Doom, créé en C++ à l’aide d’OpenGL, GLM et SDL2.',
+        'JE3desc':
             'Un jeu de type Space-Invaders en 2D pour sensibiliser à l\'espace cybernétique. Construit et présenté sur le web, CLIQUEZ POUR JOUER.',
-        'A website for a guesthouse in Brittany to showcase the area nearby, localisation implemented':
+        'BZHdesc':
             'Un site web pour une maison d\'hôtes en Bretagne pour mettre en valeur les environs, localisation implémentée.',
-        'A personal website showcasing my work and projects. Built using astro.':
+        'Portdesc':
             'Un site web personnel présentant mes travaux et projets. Construit avec Astro.',
-        'Coming Soon tracks produced on Logic X Pro for an upcoming project.':
+        'Logicdesc':
             'Bientôt disponible : des morceaux produits sur Logic X Pro pour un projet à venir.',
-        'A concept for a game engine navigated through AI, built purely with C++.':
-            'Un concept de moteur de jeu navigué par IA, construit entièrement en C++.',
-        'A mobile application for rating locations, built with Flutter and Dart, using Firebase for online storage.':
+        'Enginedesc':
+            'Un concept de moteur de jeu navigué par IA, développé en C++ avec mon propre moteur physique et le LLM Mistral.',
+        'Mobiledesc':
             'Une application mobile pour évaluer des lieux, construite avec Flutter et Dart, utilisant Firebase pour le stockage en ligne.',
 
         // Index Page
@@ -238,7 +245,7 @@ export const ui = {
         webDevelopment: 'Développement Web',
         featuredProjects: 'Projets en Vedette',
         gameStudioProject: 'Projet de studio de Jeux',
-        gameStudioDescription: 'Un projet de 8 personnes où j\'ai été le producteur général. L\'équipe comprenait 2 programmeurs, 4 designers et 1 artiste technique.',
+        gameStudioDescription: 'Un projet de 8 personnes où je suis le producteur général. L\'équipe comprenait 2 programmeurs, 4 designers et 1 artiste technique.',
         aiGameEngine: 'Moteur de Jeu IA',
         aiGameEngineDescription: 'Un concept de moteur de jeu navigué par IA, construit entièrement en C++.',
         aiGameEngineTools: 'Utilisant OpenGL, SDL2, Winsock et PyTorch.',
@@ -248,6 +255,12 @@ export const ui = {
         contactMe: 'Contactez-Moi',
         contactMessage: 'N\'hésitez pas à me contacter pour discuter de projets, de collaborations ou simplement pour échanger !',
         getInTouch: 'Entrer en Contact',
+
+        // TypeWriter script
+        'I am fine-tuning a LLM.': 'Je fine-tune un LLM.',
+        'I am building a game engine.':'Je développe un moteur de jeu.',
+        'I craft websites from scratch.':'Je crée des sites web à partir de zéro.',
+        "intro.greeting": "Salut, Je suis Thomas.",
 
         // AI Game Engine Page
         'AI Game Engine Concept': 'Concept de Moteur de Jeu IA',
