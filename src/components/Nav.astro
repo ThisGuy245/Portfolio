@@ -30,17 +30,20 @@ const routes = [
 
         <!-- Menu Links -->
         <ul class="navbar-menu" id="nav-menu">
-            <li class={`nav-item ${Astro.url.pathname === `/${lang}/` ? 'active' : ''}`}>
-                <a href={`/${lang}/`} class="neon-text">{t('Home')}</a>
+            <li class={`nav-item ${Astro.url.pathname === `/${lang}/` || Astro.url.pathname === `/${lang}` ? 'active' : ''}`}>
+                <a href={`/${lang}/`}>{t('Home')}</a>
             </li>
             <li class={`nav-item ${Astro.url.pathname === `/${lang}/projects` ? 'active' : ''}`}>
-                <a href={`/${lang}/projects`} class="neon-text">{t('Projects')}</a>
+                <a href={`/${lang}/projects`}>{t('Projects')}</a>
             </li>
-            <li class={`nav-item ${Astro.url.pathname === `/${lang}/activity` ? 'active' : ''}`}>
-                <a href={`/${lang}/activity`} class="neon-text">{t('Activity')}</a>
+            <li class={`nav-item ${Astro.url.pathname === `/${lang}/about` ? 'active' : ''}`}>
+                <a href={`/${lang}/about`}>{t('About')}</a>
+            </li>
+            <li class={`nav-item ${Astro.url.pathname === `/${lang}/contact` ? 'active' : ''}`}>
+                <a href={`/${lang}/contact`}>{t('Contact')}</a>
             </li>
             <li class={`nav-item ${Astro.url.pathname === `/${lang}/cv` ? 'active' : ''}`}>
-                <a href={`/${lang}/cv`} class="neon-text">CV</a>
+                <a href={`/${lang}/cv`}>CV</a>
             </li>
             <!--
             <li class="nav-item">
@@ -55,21 +58,14 @@ const routes = [
 
 
 <style>
-    :root {
-        --nav-background: rgba(4, 6, 24, 0.9);
-        --text-color: #e0e0e0;
-        --accent-color: #bb86fc;
-        --hover-color: rgba(187, 134, 252, 0.2);
-        --active-border: 2px solid var(--accent-color);
-    }
-
     /* Main navbar container - full-width and fixed at top */
     .navbar {
         display: flex;
         justify-content: center;
-        background-color: var(--nav-background);
+        background-color: var(--color-bg-elevated);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--color-border);
         padding: 1rem 2rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         position: fixed;
         width: 100%;
         top: 0;
@@ -81,62 +77,50 @@ const routes = [
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 90%;             /* Control the overall width */
-        max-width: 1200px;      /* Set a max-width to prevent stretching on large screens */
+        width: 100%;
+        max-width: 1200px;
     }
 
-
     .navbar-brand span {
-        font-size: 2rem;
-        font-weight: bold;
-        color: var(--text-color);
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-text);
+        letter-spacing: -0.01em;
     }
 
     .navbar-menu {
         list-style: none;
         display: flex;
         justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
         margin: 0;
         padding: 0;
     }
 
     .nav-item {
-        margin: 0 1rem;
+        margin: 0;
     }
 
     .nav-item a {
-        color: var(--text-color);
+        color: var(--color-text-muted);
         text-decoration: none;
-        font-weight: bold;
+        font-weight: 500;
+        font-size: 0.9375rem;
         padding: 0.5rem 1rem;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, color 0.3s ease;
+        border-radius: 6px;
+        transition: all 0.2s ease;
     }
 
     .nav-item.active a {
-        border-bottom: var(--active-border);
+        color: var(--color-accent);
+        background-color: rgba(99, 102, 241, 0.1);
     }
 
     .nav-item a:hover,
     .nav-item a:focus {
-        background-color: var(--hover-color);
-        color: var(--accent-color);
-    }
-
-    .resume-btn {
-        border: var(--active-border);
-        padding: 0.5rem 1rem;
-        border-radius: 5px;
-        color: var(--text-color);
-        text-decoration: none;
-        font-weight: bold;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .resume-btn:hover,
-    .resume-btn:focus {
-        background-color: var(--accent-color);
-        color: var(--nav-background);
+        color: var(--color-text);
+        background-color: var(--color-surface);
     }
 
     .language-picker {
@@ -153,49 +137,64 @@ const routes = [
     }
 
     .language-picker img {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
-        transition: transform 0.3s ease-in-out;
+        transition: transform 0.2s ease;
+        opacity: 0.8;
     }
 
     .language-picker img:hover {
-        transform: scale(1.05);
+        transform: scale(1.1);
+        opacity: 1;
     }
 
     /* Hamburger button (hidden on desktop) */
     .hamburger {
         display: none;
-        font-size: 2rem;
+        font-size: 1.5rem;
         background: none;
         border: none;
-        color: var(--text-color);
+        color: var(--color-text);
         cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 6px;
+        transition: background-color 0.2s;
     }
-         /* Improved Mobile Styles */
+
+    .hamburger:hover {
+        background-color: var(--color-surface);
+    }
+    /* Mobile Styles */
     @media (max-width: 768px) {
+        .navbar {
+            padding: 0.75rem 1rem;
+        }
+
+        .navbar-brand span {
+            font-size: 1.125rem;
+        }
+
         .hamburger {
             display: block;
-            padding: 1rem; /* More tap area */
-            z-index: 1001; /* Above the menu */
+            z-index: 1001;
         }
 
         .navbar-menu {
             position: fixed;
             top: 0;
-            right: -100%; /* Start off-screen */
-            width: 70%; /* Takes up 70% of screen */
+            right: -100%;
+            width: 280px;
             height: 100vh;
-            margin-top: 0;
-            background-color: var(--nav-background);
+            background-color: var(--color-bg-elevated);
+            border-left: 1px solid var(--color-border);
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align items to left */
-            padding: 5rem 2rem 2rem; /* Space for close button */
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            align-items: stretch;
+            padding: 4rem 1.5rem 2rem;
+            box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
             transition: right 0.3s ease-out;
             z-index: 1000;
-            opacity: 1 !important; /* Force solid background */
         }
 
         .navbar-menu.open {
@@ -204,25 +203,21 @@ const routes = [
 
         .nav-item {
             width: 100%;
-            margin: 0.75rem 0; /* More vertical spacing */
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+            margin: 0;
+            border-bottom: 1px solid var(--color-border);
         }
 
         .nav-item a {
             display: block;
-            padding: 0.75rem 1rem; /* Larger tap targets */
+            padding: 1rem;
             width: 100%;
+            border-radius: 0;
         }
 
-        .resume-btn {
-            margin-top: 1rem;
-            text-align: center;
-            width: 100%;
+        .language-picker {
+            margin-top: auto;
+            padding-top: 2rem;
         }
-
-
-
     }
 </style>
 

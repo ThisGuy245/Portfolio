@@ -10,7 +10,7 @@ export const ui = {
         // Navigation
         Home: 'Home',
         Projects: 'Projects',
-        Activity: 'Activity',
+        About: 'About',
         Contact: 'Contact',
         Guestbook: 'Guestbook',
         'Not found': 'Not found',
@@ -185,7 +185,7 @@ export const ui = {
         // Navigation
         Home: 'Accueil',
         Projects: 'Projets',
-        Activity: 'Activité',
+        About: 'À Propos',
         Contact: 'Contact',
         Guestbook: 'Livre d\'or',
         'Not found': 'Pas trouvé',

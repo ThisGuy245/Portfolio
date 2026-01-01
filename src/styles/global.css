@@ -1,12 +1,13 @@
-/* /src/styles/global.css */
+/* Global utility classes and shared styles */
+
 .modal-backdrop {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -15,20 +16,21 @@
 }
 
 .activity-modal {
-    background-color: rgba(var(--background-light), 0.9);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 2rem;
     max-width: 800px;
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     position: relative;
 }
 
 .activity-modal h2 {
     margin-top: 0;
-    color: rgb(var(--accent));
+    color: var(--color-accent);
 }
 
 .activity-modal button {
@@ -37,33 +39,43 @@
     right: 1rem;
     background: none;
     border: none;
-    color: var(--text-color);
+    color: var(--color-text);
     font-size: 1.5rem;
     cursor: pointer;
+    padding: 0.5rem;
+    transition: opacity 0.2s;
+}
+
+.activity-modal button:hover {
+    opacity: 0.7;
 }
 
 .activity-modal div {
     margin-top: 1rem;
-    line-height: 1.6;
+    line-height: 1.7;
 }
 
-.flicker {
-    animation: flickerText 2s infinite;
+/* Typography utilities */
+.text-large {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
-@keyframes flickerText {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-    }
-    20%, 24%, 55% {
-        opacity: 0;
-    }
+.text-muted {
+    color: var(--color-text-muted);
 }
-.neon-text {
-    color: #fff;
-    text-shadow:
-            0 0 5px #6600ff,
-            0 0 10px #aa00ff,
-            0 0 20px #8c00ff,
-            0 0 40px #6600ff;
+
+/* Container utilities */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 0 var(--space-lg);
+    }
 }

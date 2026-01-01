@@ -27,6 +27,34 @@ interface Project {
     websiteUrl?: string;
 }
 
+// Map technology names to icon paths
+function getTechIcons(technologies: string[]): string[] {
+    const iconMap: Record<string, string> = {
+        'c++': '/devIcons/Cpp.svg',
+        'cpp': '/devIcons/Cpp.svg',
+        'c#': '/devIcons/CSharp.svg',
+        'csharp': '/devIcons/CSharp.svg',
+        'python': '/devIcons/Python.svg',
+        'javascript': '/devIcons/JS.svg',
+        'typescript': '/devIcons/TypeScript.svg',
+        'unreal': '/devIcons/Unreal.svg',
+        'unity': '/devIcons/Unity.svg',
+        'opengl': '/devIcons/SDL.svg',
+        'sdl2': '/devIcons/SDL.svg',
+        'astro': '/devIcons/Astro.svg',
+        'Astro.svg': '/devIcons/Astro.svg',
+        'svelte': '/devIcons/Svelte.svg',
+        'Svelte': '/devIcons/Svelte.svg',
+        'html': '/devIcons/HTML.svg',
+        'css': '/devIcons/CSS.svg',
+        'ai': '/devIcons/Python.svg', // Fallback for AI
+    };
+
+    return technologies
+        .map(tech => iconMap[tech.toLowerCase()] || null)
+        .filter((icon): icon is string => icon !== null);
+}
+
 const projects: Project[] = [
     {
         title: t('Game Studio Project'),
@@ -142,67 +170,98 @@ function filterProjects(category: string, projects: Project[]): Project[] {
 let filteredProjects: Project[] = filterProjects(selectedCategory, projects);
 ---
 
-<Layout title={t('My Portfolio')}>
+<Layout title={`${t('Projects')} - Thomas Isherwood`}>
     <Nav lang={lang} />
-    <main>
-        <!-- Projects Section -->
-        <section id="projects">
-            {Object.entries(categorizeProjects(filteredProjects)).map(([category, projects]) => (
-                    <div>
-                        <h3 class="category-header">{category}</h3>
-                        <ul class="project-cards">
-                            {projects.map(project => (
-                                    <li>
-                                        <ProjectCard project={project} />
-                                    </li>
-                            ))}
-                        </ul>
-                    </div>
-            ))}
-        </section>
+    <main class="projects-page">
+        <div class="container">
+            <header class="page-header">
+                <h1>{t('Projects')}</h1>
+                <p class="page-subtitle">A selection of my recent work</p>
+            </header>
+
+            <!-- Projects Section -->
+            <section id="projects">
+                {Object.entries(categorizeProjects(filteredProjects)).map(([category, projects]) => (
+                        <div class="category-section">
+                            <h2 class="category-header">{category}</h2>
+                            <ul class="project-cards">
+                                {projects.map(project => (
+                                        <li>
+                                            <ProjectCard project={{
+                                                ...project,
+                                                icons: getTechIcons(project.technologies)
+                                            }} />
+                                        </li>
+                                ))}
+                            </ul>
+                        </div>
+                ))}
+            </section>
+        </div>
     </main>
 </Layout>
 
 <style>
-    /* Stylizing the category header */
-    .category-header {
-        font-size: 2rem;
-        font-weight: bold;
+    .projects-page {
+        padding: var(--space-2xl) 0;
+        min-height: calc(100vh - 80px);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+    }
+
+    .page-header {
         text-align: center;
-        color: var(--accent-color);
-        margin: 2rem 0;
-        position: relative;
+        margin-bottom: var(--space-2xl);
     }
 
-    .category-header::after {
-        content: '';
-        display: block;
-        width: 50%;
-        height: 2px;
-        background-color: var(--accent-color);
-        margin: 0.5rem auto 0;
+    .page-header h1 {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 700;
+        margin: 0 0 var(--space-sm);
+        letter-spacing: -0.03em;
     }
 
-    /* Project Cards: Fixed sizes */
+    .page-subtitle {
+        font-size: 1.25rem;
+        color: var(--color-text-muted);
+        margin: 0;
+    }
+
+    .category-section {
+        margin-bottom: var(--space-2xl);
+    }
+
+    .category-header {
+        font-size: clamp(1.75rem, 4vw, 2.25rem);
+        font-weight: 600;
+        text-align: center;
+        color: var(--color-text);
+        margin: 0 0 var(--space-xl);
+        letter-spacing: -0.02em;
+    }
+
     .project-cards {
         display: grid;
-        grid-template-columns: repeat(auto-fit, 300px); /* Fixed card size */
-        justify-content: center; /* Center the cards in the grid */
-        gap: 1.5rem;
+        grid-template-columns: 1fr;
+        gap: var(--space-lg);
         list-style: none;
         padding: 0;
+        margin: 0;
     }
 
-    /* Responsive behavior is still intact */
-    @media (min-width: 768px) {
+    @media (min-width: 640px) {
         .project-cards {
-            grid-template-columns: repeat(auto-fit, 300px);
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 
     @media (min-width: 1024px) {
         .project-cards {
-            grid-template-columns: repeat(auto-fit, 300px);
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 </style>
